@@ -1,6 +1,6 @@
 "use client"
 
-import Nav from "components/Nav/Nav";
+import Nav from "@components/Nav/Nav";
 import SideNav from "components/SideNav/SideNav";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react"
