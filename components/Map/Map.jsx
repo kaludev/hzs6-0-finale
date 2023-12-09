@@ -1,7 +1,11 @@
 "use client"
 import {useState, useEffect} from 'react';
+<<<<<<< HEAD
 import styles from "./Map.module.css"
 import { GoogleMap, LoadScript, Marker, DirectionsService, DirectionsRenderer, useJsApiLoader } from '@react-google-maps/api';
+=======
+import { GoogleMap, LoadScript, MarkerF, DirectionsService, DirectionsRenderer, useJsApiLoader } from '@react-google-maps/api';
+>>>>>>> 9be1002cd4a6adee8f275ceecaa99bfd60177f2c
 //import { useSession } from 'next-auth/react';
 
 const Map = () => {
@@ -22,6 +26,7 @@ const Map = () => {
     useEffect(() => {
         if(navigator.geolocation){
           navigator.geolocation.getCurrentPosition((pos) => {
+            console.log(pos);
             setYourLocation({lat: pos.coords.latitude, lng: pos.coords.longitude});          
           }, (err) => {
             console.log(err);
@@ -61,8 +66,8 @@ const Map = () => {
     
 
     const containerStyle = {
-      width: '100%',
-      height: '100%',
+      width: '1024px',
+      height: '500px',
     };
 
     /*const findClosestMarker = (userLocation, mode) => {
@@ -168,11 +173,16 @@ const Map = () => {
         isLoaded && (
           <div className={styles.iframeMain}>
             <GoogleMap mapContainerStyle={containerStyle} center={yourLocation} zoom={15}>
-              {yourLocation && (
-              <Marker position={yourLocation} title="Your location" />
-              )}
+                {
+                    yourLocation && (
+                    <>
+                        {console.log(yourLocation)}
+                        <MarkerF position={yourLocation} title="Your location" />
+                    </>
+                    )
+                }
             </GoogleMap>
-          </div>
+            </div>
         )
       }
       </>

@@ -13,6 +13,7 @@ const authOptions = {
   ],
   callbacks: {
     async session({ session }) {
+      await connectToDB();
       const sessionUser = await User.findOne({
         email: session.user.email,
       });
@@ -21,16 +22,6 @@ const authOptions = {
       session.user.image = sessionUser.image.toString();
       session.user.username = sessionUser.username;
       session.user.name = sessionUser.name;
-      session.user.isOrganizer = isOrganizer;
-      session.user.isSuperAdmin = sessionUser.isSuperAdmin;
-      const existingReq = await OrganizerRequest.findOne({
-        user_id: sessionUser._id
-      })
-      if(existingReq){
-        session.user.requestedOrganizer = true;
-      }else{
-        session.user.requestedOrganizer = false;
-      }
 
       return session;
     },
