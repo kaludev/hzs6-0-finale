@@ -129,9 +129,9 @@ const Map = ({buttonState, mode}) => {
       return deg * (Math.PI / 180);
     };
 
-    useEffect(() => {
+    /*useEffect(() => {
 
-    }, [directions]);
+    }, [directions]);*/
 
     /*const handleDirections = () => {
       if (yourLocation && closestMarker && !directions) {
@@ -168,108 +168,6 @@ const Map = ({buttonState, mode}) => {
       {
         isLoaded && (
           <GoogleMap mapContainerStyle={containerStyle} center={yourLocation} zoom={2}>
-          
-          {
-
-            mode === "user" && (
-              
-                session?.user && (
-              <>
-                {buttonState.showNext && (
-                session?.user.events.map((e) => (
-                  new Date(e.starts_at) > Date.now() ? (
-                    <Marker
-                      key={e.id}
-                      icon={{url: `../../images/faviconRed.ico`}}
-                      position={e.location}
-                      title={e.name + "\n" + e.description + "\n" + new Date(e.starts_at).toLocaleDateString() + " - " + new Date(e.ends_at).toLocaleDateString() + "\n" + new Date(e.starts_at).toLocaleTimeString() + " - " + new Date(e.ends_at).toLocaleTimeString()}
-                    />
-                  ) : console.log("nema predstojecih")
-                ))
-                
-                )
-                }
-                {
-                  buttonState.showClosest && returnClosest() && (
-                    
-                      <>
-                        <Marker position={closestMarker} title={closestEvent.name + "\n" + closestEvent.description + "\n" + new Date(closestEvent.starts_at).toLocaleDateString() + " - " + new Date(closestEvent.ends_at).toLocaleDateString() + "\n" + new Date(closestEvent.starts_at).toLocaleTimeString() + " - " + new Date(closestEvent.ends_at).toLocaleTimeString()}  />
-                        <DirectionsRenderer directions={directions} />
-                      </>
-
-                  )
-                }
-                {
-                  buttonState.showPast && (
-                    session?.user.events.map((e) => (
-                      new Date(e.ends_at) < Date.now() ? (
-                        <Marker
-                          key={e.id}
-                          icon={{url: `../../images/faviconRed.ico`}}
-                          position={e.location}
-                          title={e.name + "\n" + e.description + "\n" + new Date(e.starts_at).toLocaleDateString() + " - " + new Date(e.ends_at).toLocaleDateString() + "\n" + new Date(e.starts_at).toLocaleTimeString() + " - " + new Date(e.ends_at).toLocaleTimeString()}
-                        />
-                      ) : ""
-                    ))
-                    
-                  )
-                }
-              </>
-            )
-              
-            )
-            }
-            {
-              mode === "all" && (
-              events && (
-                <>
-                  {buttonState.showNext && (
-                  events.map((e) => (
-                    new Date(e.starts_at) > Date.now() ? (
-                      <Marker
-                        key={e.id}
-                        icon={{url: `../../images/faviconRed.ico`}}
-                        position={e.location}
-                        title={e.name + "\n" + e.description + "\n" + new Date(e.starts_at).toLocaleDateString() + " - " + new Date(e.ends_at).toLocaleDateString() + "\n" + new Date(e.starts_at).toLocaleTimeString() + " - " + new Date(e.ends_at).toLocaleTimeString()}
-                      />
-                    ) : ""
-                  ))
-                  
-                  )
-                  }
-                  {
-                    buttonState.showClosest && returnClosest() && (
-                      
-                        <>
-                          <Marker position={closestMarker} title={closestEvent.name + "\n" + closestEvent.description + "\n" + new Date(closestEvent.starts_at).toLocaleDateString() + " - " + new Date(closestEvent.ends_at).toLocaleDateString() + "\n" + new Date(closestEvent.starts_at).toLocaleTimeString() + " - " + new Date(closestEvent.ends_at).toLocaleTimeString()}  />
-                          <DirectionsRenderer directions={directions} />
-                        </>
-                      
-                    )
-                  }
-                  {
-                    buttonState.showPast && (
-                      events.map((e) => (
-                        new Date(e.ends_at) < Date.now() ? (
-                          <Marker
-                            key={e.id}
-                            icon={{url: `../../images/faviconRed.ico`}}
-                            position={e.location}
-                            title={e.name + "\n" + e.description + "\n" + new Date(e.starts_at).toLocaleDateString() + " - " + new Date(e.ends_at).toLocaleDateString() + "\n" + new Date(e.starts_at).toLocaleTimeString() + " - " + new Date(e.ends_at).toLocaleTimeString()}
-                          />
-                        ) : ""
-                      ))
-                      
-                    )
-                  }
-                </>
-              )
-              
-            )
-
-            }
-
-          
           {yourLocation && (
           <Marker position={yourLocation} title="Your location"  />
           )}
