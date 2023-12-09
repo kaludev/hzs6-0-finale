@@ -49,17 +49,28 @@ const QuizGenerator = () => {
             <h1>Quiz Generator</h1>
             <Webcam
                 audio={false}
-                height={1080}
-                width={1080}
+                height={window.height}
+                width={window.width}
                 screenshotFormat="image/jpeg"
                 videoConstraints={{
                     facingMode: "environment",
                     width: 1080,
-                    height: 1080
+                    height: 1920
                 }}
             />
-            <input type="file" onChange={handleChange} />
-            <button type="button" onClick={handleSubmit}>Submit</button>
+            {({ getScreenshot }) => (
+                <button
+                    onClick={() => {
+                        const copy = { ...file};
+                        const imageSrc = getScreenshot()
+                        copy.value = imageSrc;
+                        setFile(copy);
+                        handleSubmit();
+                    }}
+                >
+                    Capture photo
+                </button>
+            )}
             <p className={styles.errorMessage}>{file.errorMsg}</p>
         </div>) : <div className={styles.main}>
             {/*Nikola promeni ovo*/}
