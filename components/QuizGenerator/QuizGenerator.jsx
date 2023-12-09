@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import "react-toastify/dist/ReactToastify.css";
 import {toast} from 'react-toastify';
@@ -39,11 +39,19 @@ const QuizGenerator = () => {
             setFile(copy);
         }
     };
+    const handleSs = () => {
+        const copy = { ...file};
+        const imageSrc = webcamRef.current.getScreenshot();
+        copy.value = imageSrc;
+        setFile(copy);
+        handleSubmit();
+    }
     return (
 
         session?.user ? (<div className={styles.main}>
             <h1>Quiz Generator</h1>
             <Webcam
+                className={styles.webcam}
                 audio={false}
                 height={window.height}
                 width={window.width}
@@ -55,18 +63,9 @@ const QuizGenerator = () => {
                     width:window.width
                 }}
             />
-            
-                <button
-                    onClick={() => {
-                        const copy = { ...file};
-                        const imageSrc = webcamRef.current.getScreenshot();
-                        copy.value = imageSrc;
-                        setFile(copy);
-                        handleSubmit();
-                    }}
-                >
-                    Capture photo
-                </button>
+            <button  onClick={handleSs}>
+                Capture photo
+            </button>
             <p className={styles.errorMessage}>{file.errorMsg}</p>
         </div>) : <div className={styles.main}>
             {/*Nikola promeni ovo*/}
