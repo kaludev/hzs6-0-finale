@@ -1,22 +1,19 @@
 "use client"
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import "react-toastify/dist/ReactToastify.css";
 import {toast} from 'react-toastify';
 import styles from './quizGenerator.module.css';
+import Webcam from "react-webcam";
 
 const QuizGenerator = () => {
     const { data:session } = useSession();
+    const webcamRef = useRef(null);
     const [file, setFile] = useState({
         value: "",
         error: false,
         errorMsg: ""
     });
-    const handleChange = (e) =>{
-        const copy = { ...file};
-        copy.value = e.target.files[0];
-        setFile(copy);
-    }
     const handleSubmit = async () => {
         if(file.value){
             try{
@@ -42,11 +39,33 @@ const QuizGenerator = () => {
             setFile(copy);
         }
     };
+    const handleSs = () => {
+        const copy = { ...file};
+        const imageSrc = webcamRef.current.getScreenshot();
+        copy.value = imageSrc;
+        setFile(copy);
+        handleSubmit();
+    }
     return (
 
         session?.user ? (<div className={styles.main}>
-            <input type="file" name="image" id="image" onChange={handleChange}/>
-            <button type="button" onClick={handleSubmit}>Submit</button>
+            <h1>Quiz Generator</h1>
+            <Webcam
+                className={styles.webcam}
+                audio={false}
+                height={window.height}
+                width={window.width}
+                screenshotFormat="image/jpeg"
+                ref={webcamRef}
+                videoConstraints={{
+                    facingMode: "environment",
+                    height:window.height,
+                    width:window.width
+                }}
+            />
+            <button  onClick={handleSs}>
+                Capture photo
+            </button>
             <p className={styles.errorMessage}>{file.errorMsg}</p>
         </div>) : <div className={styles.main}>
             {/*Nikola promeni ovo*/}

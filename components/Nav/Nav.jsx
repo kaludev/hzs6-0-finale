@@ -45,16 +45,19 @@ const Nav = ({setMenuVisible}) => {
     <div className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
       <div className={styles.logo}>
               <Link href="/">
-                <img src={scrolled ? "/images/logo.png" : "/images/logoBlack.png"} alt="Logo" />
+                <img src={scrolled ? "/images/logo.png" : "/images/logoWhite.png"} alt="Logo" />
               </Link>
       </div>
       <nav className={styles.nav}>
         <ul>
           <li>
-              <Link className={styles.navLink} href="/about">O Nama</Link>
+              <Link className={styles.navLink} href="/partners">Partneri</Link>
           </li>
           <li>
-              <Link className={styles.navLink} href="/arena">Najbliza takmicenja</Link>
+              <Link className={styles.navLink} href="/discover">Otkrij mesto</Link>
+          </li>
+          <li>
+              <Link className={styles.navLink} href="/arena">Sakupi bodove</Link>
           </li>
           <li>
               <Link className={styles.navLink} href="/ranglist">Rang Lista</Link>
