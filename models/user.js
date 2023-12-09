@@ -29,11 +29,24 @@ const userSchema = new Schema({
         type: String,
     },
     interests: {
-        type: [String],
+        type: String,
     },
     points: {
         type: Number,
         default: 0
+    },
+    rank: {
+        type: String,
+        set: function(){
+            if(this.points >= 200 && this.points < 500){
+                return "Silver";
+            }
+            else if(this.points >= 500){
+                return "Gold";
+            }
+            else
+                return "Bronze";
+        }
     },
     active_quiz: {
         type: Schema.Types.ObjectId
