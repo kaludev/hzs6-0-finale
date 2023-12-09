@@ -1,9 +1,9 @@
 "use client"
 import {useState, useEffect} from 'react';
-import { GoogleMap, LoadScript, Marker, DirectionsService, DirectionsRenderer, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, MarkerF, DirectionsService, DirectionsRenderer, useJsApiLoader } from '@react-google-maps/api';
 //import { useSession } from 'next-auth/react';
 
-const Map = ({buttonState, mode}) => {
+const Map = () => {
     const [yourLocation, setYourLocation] = useState({});
     //const [closestMarker, setClosestMarker] = useState(null);
     //const [directions, setDirections] = useState(null);
@@ -21,6 +21,7 @@ const Map = ({buttonState, mode}) => {
     useEffect(() => {
         if(navigator.geolocation){
           navigator.geolocation.getCurrentPosition((pos) => {
+            console.log(pos);
             setYourLocation({lat: pos.coords.latitude, lng: pos.coords.longitude});          
           }, (err) => {
             console.log(err);
@@ -60,8 +61,8 @@ const Map = ({buttonState, mode}) => {
     
 
     const containerStyle = {
-      width: '100%',
-      height: '100%',
+      width: '1024px',
+      height: '500px',
     };
 
     /*const findClosestMarker = (userLocation, mode) => {
@@ -129,9 +130,9 @@ const Map = ({buttonState, mode}) => {
       return deg * (Math.PI / 180);
     };
 
-    useEffect(() => {
+    /*useEffect(() => {
 
-    }, [directions]);
+    }, [directions]);*/
 
     /*const handleDirections = () => {
       if (yourLocation && closestMarker && !directions) {
@@ -161,119 +162,20 @@ const Map = ({buttonState, mode}) => {
       }
     }*/
 
-    return
-    
-    (
+    return (
       <>
       {
         isLoaded && (
-          <GoogleMap mapContainerStyle={containerStyle} center={yourLocation} zoom={2}>
-          
-          {
-
-            mode === "user" && (
-              
-                session?.user && (
-              <>
-                {buttonState.showNext && (
-                session?.user.events.map((e) => (
-                  new Date(e.starts_at) > Date.now() ? (
-                    <Marker
-                      key={e.id}
-                      icon={{url: `../../images/faviconRed.ico`}}
-                      position={e.location}
-                      title={e.name + "\n" + e.description + "\n" + new Date(e.starts_at).toLocaleDateString() + " - " + new Date(e.ends_at).toLocaleDateString() + "\n" + new Date(e.starts_at).toLocaleTimeString() + " - " + new Date(e.ends_at).toLocaleTimeString()}
-                    />
-                  ) : console.log("nema predstojecih")
-                ))
-                
-                )
-                }
+            <GoogleMap mapContainerStyle={containerStyle} center={yourLocation} zoom={15}>
                 {
-                  buttonState.showClosest && returnClosest() && (
-                    
-                      <>
-                        <Marker position={closestMarker} title={closestEvent.name + "\n" + closestEvent.description + "\n" + new Date(closestEvent.starts_at).toLocaleDateString() + " - " + new Date(closestEvent.ends_at).toLocaleDateString() + "\n" + new Date(closestEvent.starts_at).toLocaleTimeString() + " - " + new Date(closestEvent.ends_at).toLocaleTimeString()}  />
-                        <DirectionsRenderer directions={directions} />
-                      </>
-
-                  )
-                }
-                {
-                  buttonState.showPast && (
-                    session?.user.events.map((e) => (
-                      new Date(e.ends_at) < Date.now() ? (
-                        <Marker
-                          key={e.id}
-                          icon={{url: `../../images/faviconRed.ico`}}
-                          position={e.location}
-                          title={e.name + "\n" + e.description + "\n" + new Date(e.starts_at).toLocaleDateString() + " - " + new Date(e.ends_at).toLocaleDateString() + "\n" + new Date(e.starts_at).toLocaleTimeString() + " - " + new Date(e.ends_at).toLocaleTimeString()}
-                        />
-                      ) : ""
-                    ))
-                    
-                  )
-                }
-              </>
-            )
-              
-            )
-            }
-            {
-              mode === "all" && (
-              events && (
-                <>
-                  {buttonState.showNext && (
-                  events.map((e) => (
-                    new Date(e.starts_at) > Date.now() ? (
-                      <Marker
-                        key={e.id}
-                        icon={{url: `../../images/faviconRed.ico`}}
-                        position={e.location}
-                        title={e.name + "\n" + e.description + "\n" + new Date(e.starts_at).toLocaleDateString() + " - " + new Date(e.ends_at).toLocaleDateString() + "\n" + new Date(e.starts_at).toLocaleTimeString() + " - " + new Date(e.ends_at).toLocaleTimeString()}
-                      />
-                    ) : ""
-                  ))
-                  
-                  )
-                  }
-                  {
-                    buttonState.showClosest && returnClosest() && (
-                      
-                        <>
-                          <Marker position={closestMarker} title={closestEvent.name + "\n" + closestEvent.description + "\n" + new Date(closestEvent.starts_at).toLocaleDateString() + " - " + new Date(closestEvent.ends_at).toLocaleDateString() + "\n" + new Date(closestEvent.starts_at).toLocaleTimeString() + " - " + new Date(closestEvent.ends_at).toLocaleTimeString()}  />
-                          <DirectionsRenderer directions={directions} />
-                        </>
-                      
+                    yourLocation && (
+                    <>
+                        {console.log(yourLocation)}
+                        <MarkerF position={yourLocation} title="Your location" />
+                    </>
                     )
-                  }
-                  {
-                    buttonState.showPast && (
-                      events.map((e) => (
-                        new Date(e.ends_at) < Date.now() ? (
-                          <Marker
-                            key={e.id}
-                            icon={{url: `../../images/faviconRed.ico`}}
-                            position={e.location}
-                            title={e.name + "\n" + e.description + "\n" + new Date(e.starts_at).toLocaleDateString() + " - " + new Date(e.ends_at).toLocaleDateString() + "\n" + new Date(e.starts_at).toLocaleTimeString() + " - " + new Date(e.ends_at).toLocaleTimeString()}
-                          />
-                        ) : ""
-                      ))
-                      
-                    )
-                  }
-                </>
-              )
-              
-            )
-
-            }
-
-          
-          {yourLocation && (
-          <Marker position={yourLocation} title="Your location"  />
-          )}
-        </GoogleMap>
+                }
+            </GoogleMap>
         )
       }
       </>
