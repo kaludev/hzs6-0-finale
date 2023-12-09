@@ -51,8 +51,8 @@ const QuizGenerator = () => {
                 ref={webcamRef}
                 videoConstraints={{
                     facingMode: "environment",
-                    width: 1080,
-                    height: 1920
+                    height:window.height,
+                    width:window.width
                 }}
             />
             
