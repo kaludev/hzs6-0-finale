@@ -1,7 +1,12 @@
 "use client"
 import { useSession } from 'next-auth/react';
 import {useState, useEffect} from 'react';
+<<<<<<< HEAD
+import styles from "./Map.module.css"
+import { GoogleMap, LoadScript, Marker, DirectionsService, DirectionsRenderer, useJsApiLoader } from '@react-google-maps/api';
+=======
 import { GoogleMap, LoadScript, MarkerF, DirectionsService, DirectionsRenderer, useJsApiLoader } from '@react-google-maps/api';
+>>>>>>> 9be1002cd4a6adee8f275ceecaa99bfd60177f2c
 //import { useSession } from 'next-auth/react';
 
 const Map = () => {
@@ -171,6 +176,7 @@ const Map = () => {
       <>
       {
         isLoaded && (
+          <div className={styles.iframeMain}>
             <GoogleMap mapContainerStyle={containerStyle} center={yourLocation} zoom={15}>
                 {
                     yourLocation && (
@@ -181,6 +187,7 @@ const Map = () => {
                     )
                 }
             </GoogleMap>
+            </div>
         )
       }
       </>
