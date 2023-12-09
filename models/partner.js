@@ -24,8 +24,5 @@ const partnerSchema = new Schema({
             ] 
         */
         type: [Object] 
-    },
-    quizes: {
-        type: [Schema.Types.ObjectId]
     }
 })

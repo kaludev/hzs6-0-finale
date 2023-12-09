@@ -1,10 +1,13 @@
-"use client"
 import { put } from '@vercel/blob';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../auth/[...nextauth]/route';
+import { connectToDB } from '@utils/database';
 
 const vision = require('@google-cloud/vision');
 
 export const POST = async (req) => {
     const user = await getServerSession(authOptions);
+    console.log(user);
     try{
             await connectToDB();
             const formData = await req.formData();
@@ -18,6 +21,6 @@ export const POST = async (req) => {
                   });
             console.log(blob);
     }catch(e){
-        
+        console.log(e.message);
     }
 }

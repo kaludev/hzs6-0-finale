@@ -1,4 +1,5 @@
 "use client"
+import { useSession } from 'next-auth/react';
 import {useState, useEffect} from 'react';
 import { GoogleMap, LoadScript, MarkerF, DirectionsService, DirectionsRenderer, useJsApiLoader } from '@react-google-maps/api';
 //import { useSession } from 'next-auth/react';
@@ -16,7 +17,7 @@ const Map = () => {
     useEffect(() => {
 
     }, [isLoaded])
-    //const {data: session} = useSession();
+    const {data: session} = useSession();
 
     useEffect(() => {
         if(navigator.geolocation){
@@ -161,6 +162,10 @@ const Map = () => {
         return true;
       }
     }*/
+
+    useEffect(() => {
+        console.log(session?.user);
+    }, [session]);
 
     return (
       <>
