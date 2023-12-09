@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react'
 import "react-toastify/dist/ReactToastify.css";
 import {toast} from 'react-toastify';
 import styles from './quizGenerator.module.css';
+import Webcam from "react-webcam";
 
 const QuizGenerator = () => {
     const { data:session } = useSession();
@@ -45,7 +46,19 @@ const QuizGenerator = () => {
     return (
 
         session?.user ? (<div className={styles.main}>
-            <input type="file" name="image" id="image" onChange={handleChange}/>
+            <h1>Quiz Generator</h1>
+            <Webcam
+                audio={false}
+                height={1080}
+                width={1080}
+                screenshotFormat="image/jpeg"
+                videoConstraints={{
+                    facingMode: "environment",
+                    width: 1080,
+                    height: 1080
+                }}
+            />
+            <input type="file" onChange={handleChange} />
             <button type="button" onClick={handleSubmit}>Submit</button>
             <p className={styles.errorMessage}>{file.errorMsg}</p>
         </div>) : <div className={styles.main}>
