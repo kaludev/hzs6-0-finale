@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react';
 import { GoogleMap, LoadScript, Marker, DirectionsService, DirectionsRenderer, useJsApiLoader } from '@react-google-maps/api';
 //import { useSession } from 'next-auth/react';
 
-const Map = ({buttonState, mode}) => {
+const Map = () => {
     const [yourLocation, setYourLocation] = useState({});
     //const [closestMarker, setClosestMarker] = useState(null);
     //const [directions, setDirections] = useState(null);
@@ -161,9 +161,7 @@ const Map = ({buttonState, mode}) => {
       }
     }*/
 
-    return
-    
-    (
+    return (
       <>
       {
         isLoaded && (

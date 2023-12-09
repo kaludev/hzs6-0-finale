@@ -1,11 +1,8 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import User from "@models/user";
-import Event from "@models/event";
 
 import { connectToDB } from "@utils/database";
-import Organizer from "@models/organizer";
-import OrganizerRequest from "@models/OrganizerRequest";
 
 const authOptions = {
   providers: [
@@ -19,15 +16,6 @@ const authOptions = {
       const sessionUser = await User.findOne({
         email: session.user.email,
       });
-      let isOrganizer = await Organizer.findOne({
-        user_id: sessionUser._id
-      });
-      if (isOrganizer != undefined) {
-        isOrganizer = true;
-      }else{
-        isOrganizer = false;
-      }
-      const user_events = await Event.find({users_signed: sessionUser._id});
 
       session.user._id = sessionUser._id.toString();
       session.user.image = sessionUser.image.toString();
@@ -43,7 +31,6 @@ const authOptions = {
       }else{
         session.user.requestedOrganizer = false;
       }
-      session.user.events = user_events;
 
       return session;
     },
