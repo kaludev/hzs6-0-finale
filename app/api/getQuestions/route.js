@@ -18,7 +18,7 @@ export const POST = async (req) => {
 
             const bytes = await image.arrayBuffer();
             const buffer = await Buffer.from(bytes);
-            const blob = await put("temp_" + new Date().toJSON().slice(0,23) +'.jpg', buffer, {
+            const blob = await put("temp_" + new Date().toJSON().slice(0,23) +'.jpeg', buffer, {
                     access: 'public',
                   });
             console.log(blob);
