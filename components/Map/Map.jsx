@@ -1,6 +1,6 @@
 "use client"
 import {useState, useEffect} from 'react';
-import { GoogleMap, LoadScript, Marker, DirectionsService, DirectionsRenderer, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, MarkerF, DirectionsService, DirectionsRenderer, useJsApiLoader } from '@react-google-maps/api';
 //import { useSession } from 'next-auth/react';
 
 const Map = () => {
@@ -21,6 +21,7 @@ const Map = () => {
     useEffect(() => {
         if(navigator.geolocation){
           navigator.geolocation.getCurrentPosition((pos) => {
+            console.log(pos);
             setYourLocation({lat: pos.coords.latitude, lng: pos.coords.longitude});          
           }, (err) => {
             console.log(err);
@@ -60,8 +61,8 @@ const Map = () => {
     
 
     const containerStyle = {
-      width: '100%',
-      height: '100%',
+      width: '1024px',
+      height: '500px',
     };
 
     /*const findClosestMarker = (userLocation, mode) => {
@@ -165,11 +166,16 @@ const Map = () => {
       <>
       {
         isLoaded && (
-          <GoogleMap mapContainerStyle={containerStyle} center={yourLocation} zoom={2}>
-          {yourLocation && (
-          <Marker position={yourLocation} title="Your location"  />
-          )}
-        </GoogleMap>
+            <GoogleMap mapContainerStyle={containerStyle} center={yourLocation} zoom={15}>
+                {
+                    yourLocation && (
+                    <>
+                        {console.log(yourLocation)}
+                        <MarkerF position={yourLocation} title="Your location" />
+                    </>
+                    )
+                }
+            </GoogleMap>
         )
       }
       </>
