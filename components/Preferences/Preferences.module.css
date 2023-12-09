@@ -1,0 +1,53 @@
+.prefCont{
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 100px auto 0 auto;
+}
+.prefName{
+    width: 100%;
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+}
+.prefMain{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.prefBox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    margin: 10px 20px 10px 0;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border: 2px solid transparent;
+    cursor: pointer;
+}
+.prefBoxSelected{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    margin: 10px 20px 10px 0;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: none;
+    border: 2px solid var(--main-color);
+}
+.prefIcon{
+    font-size: 20px;
+    padding: 5px;
+}
+.prefText{
+    font-size: 14px;
+    font-weight: 600;
+    padding: 5px;
+    user-select: none;
+}

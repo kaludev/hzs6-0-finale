@@ -1,0 +1,30 @@
+.iframeMain{
+    width: 80%;
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1000px;
+    height: 700px;
+}
+
+/* Large devices (laptops/desktops, 992px) */
+@media only screen and (max-width: 992px) {
+    .iframeMain{
+        width: 900px;
+    }
+}
+
+/* Medium devices (landscape tablets, 768pxp) */
+@media only screen and (max-width: 768px) {
+    .iframeMain{
+        width: 760px;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px) */
+@media only screen and (max-width: 600px) {
+    .iframeMain{
+        width: 550px;
+    }
+}

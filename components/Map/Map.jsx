@@ -1,5 +1,6 @@
 "use client"
 import {useState, useEffect} from 'react';
+import styles from "./Map.module.css"
 import { GoogleMap, LoadScript, Marker, DirectionsService, DirectionsRenderer, useJsApiLoader } from '@react-google-maps/api';
 //import { useSession } from 'next-auth/react';
 
@@ -165,11 +166,13 @@ const Map = () => {
       <>
       {
         isLoaded && (
-          <GoogleMap mapContainerStyle={containerStyle} center={yourLocation} zoom={2}>
-          {yourLocation && (
-          <Marker position={yourLocation} title="Your location"  />
-          )}
-        </GoogleMap>
+          <div className={styles.iframeMain}>
+            <GoogleMap mapContainerStyle={containerStyle} center={yourLocation} zoom={15}>
+              {yourLocation && (
+              <Marker position={yourLocation} title="Your location" />
+              )}
+            </GoogleMap>
+          </div>
         )
       }
       </>
