@@ -54,13 +54,13 @@ const Nav = ({setMenuVisible}) => {
               <Link className={styles.navLink} href="/about">O Nama</Link>
           </li>
           <li>
-              <Link className={styles.navLink} href="/arena">Arena</Link>
+              <Link className={styles.navLink} href="/arena">Najbliza takmicenja</Link>
           </li>
           <li>
               <Link className={styles.navLink} href="/ranglist">Rang Lista</Link>
           </li>
           <li>
-              <Link className={styles.navLink} href="/activities">Moje aktivnosti</Link>
+              <Link className={styles.navLink} href="/activities">Moj nalog</Link>
           </li>
           <li>
           {session?.user ? (
