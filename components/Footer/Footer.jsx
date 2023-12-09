@@ -9,7 +9,7 @@ export default function Footer({dark}) {
             <hr className={styles.footerDevider} />
             <div className={styles.footerMain}>
                 <div className={styles.footerCol}>
-                    <img className={styles.footerLogo} src="./images/logoGreen.png" alt="HakatonArenaLogo" />
+                    <img className={styles.footerLogo} src="./images/logoFooter.png" alt="HakatonArenaLogo" />
                 </div>
                 <div className={styles.footerCol}>
                     <h3>Stranice</h3>
