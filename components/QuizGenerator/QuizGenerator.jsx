@@ -8,16 +8,12 @@ import Webcam from "react-webcam";
 
 const QuizGenerator = () => {
     const { data:session } = useSession();
+    const webcamRef = useRef(null);
     const [file, setFile] = useState({
         value: "",
         error: false,
         errorMsg: ""
     });
-    const handleChange = (e) =>{
-        const copy = { ...file};
-        copy.value = e.target.files[0];
-        setFile(copy);
-    }
     const handleSubmit = async () => {
         if(file.value){
             try{
@@ -52,17 +48,18 @@ const QuizGenerator = () => {
                 height={window.height}
                 width={window.width}
                 screenshotFormat="image/jpeg"
+                ref={webcamRef}
                 videoConstraints={{
                     facingMode: "environment",
                     width: 1080,
                     height: 1920
                 }}
             />
-            {({ getScreenshot }) => (
+            
                 <button
                     onClick={() => {
                         const copy = { ...file};
-                        const imageSrc = getScreenshot()
+                        const imageSrc = webcamRef.current.getScreenshot();
                         copy.value = imageSrc;
                         setFile(copy);
                         handleSubmit();
@@ -70,7 +67,6 @@ const QuizGenerator = () => {
                 >
                     Capture photo
                 </button>
-            )}
             <p className={styles.errorMessage}>{file.errorMsg}</p>
         </div>) : <div className={styles.main}>
             {/*Nikola promeni ovo*/}
