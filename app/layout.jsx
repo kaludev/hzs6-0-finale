@@ -1,9 +1,9 @@
-import '@styles/globals.css';
+import 'styles/globals.css';
 
-import Provider from '@components/Provider';
-import Footer from '@components/Footer/Footer';
-import ToastProvider from '@components/ToastProvider';
-import Navigation from '@components/Navigation/Navigation';
+import Provider from 'components/Provider';
+import Footer from 'components/Footer/Footer';
+import ToastProvider from 'components/ToastProvider';
+import Navigation from 'components/Navigation/Navigation';
 
 export const metadata = {
     title: 'Hakaton Arena',
