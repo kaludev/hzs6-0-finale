@@ -41,7 +41,8 @@ const QuizGenerator = () => {
     };
     const handleSs = () => {
         const copy = { ...file};
-        const imageSrc = webcamRef.current.getScreenshot();
+        const imageSrc = await webcamRef.current.getScreenshot();
+        console.log(imageSrc);
         copy.value = imageSrc;
         setFile(copy);
         handleSubmit();
