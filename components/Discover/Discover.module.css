@@ -1,7 +1,8 @@
-.main{
+.main {
     margin-top: 100px;
 }
-.notFound{
+
+.notFound {
     min-height: 600px;
     width: 100%;
     display: flex;
@@ -10,16 +11,30 @@
     align-items: center;
     padding: 10px;
 }
-.colored{
+
+.colored {
     font-size: 20px;
     font-weight: 600;
     color: var(--main-color);
     margin-top: 80px;
 }
 
-.webCam{
+.webCam {
     z-index: 0;
+    margin: auto;
 }
-.button{
+
+.button {
     z-index: 2;
+}
+
+.primaryButton{
+    max-width: 150px;
+    text-align: center;
+    padding: 5px 15px;
+    color: #fff;
+    margin: 10px 0 10px 30px;
+}
+.primaryButton:hover{
+    color: var(--main-color);
 }
