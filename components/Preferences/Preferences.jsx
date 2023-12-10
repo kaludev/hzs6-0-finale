@@ -4,9 +4,12 @@ import styles from "./Preferences.module.css"
 import { FaUser, FaPalette, FaScroll, FaDribbble, FaPizzaSlice, FaBeer, FaCanadianMapleLeaf } from "react-icons/fa";
 import Link from "next/link";
 import { useState } from "react";
+import "react-toastify/dist/ReactToastify.css";
+import {toast} from 'react-toastify';
+import { useRouter } from "next/navigation";
 
 export default function PreferencesSection() {
-
+    const router =  useRouter();
     const [selectedGod, setSelectedGod] = useState("");
     const [selectedProf, setSelectedProf] = useState("");
     const [selectedInter, setSelectedInter] = useState("");
@@ -19,6 +22,24 @@ export default function PreferencesSection() {
     }
     function handleSelectInter(n){
         setSelectedInter(n);
+    }
+    const handleSubmit = async () =>{
+        try{
+            const res = await fetch('/api/user/setpreferenced');
+            const data = await res.json();
+            console.log(data);
+            if(!data.ok){
+                throw new Error(data.message);
+            }
+
+            toast.success('Uspesno izabrane preference');
+            router.push('/')
+        }catch(e){
+            toast.error(e.message)
+        }
+        
+
+        
     }
 
     return (
@@ -69,7 +90,7 @@ export default function PreferencesSection() {
                     <div className={styles.prefText}>Sport</div>
                 </div>
             </div>
-            <Link href="/about"><button className={`${styles.primaryButton} primaryButton`}>Prihvati</button></Link>
+            <button onClick={handleSubmit} className={`${styles.primaryButton} primaryButton`}>Prihvati</button>
             <div className={styles.prefName}></div>
             <div className={styles.prefMain} >
                 

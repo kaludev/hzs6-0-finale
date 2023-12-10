@@ -100,7 +100,7 @@
 }
 
 .primaryButton:hover {
-    color: var(--main-color);
+    color: #fff;
     box-shadow: rgba(0, 0, 0, 0) 0px 5px 15px;
 }
 

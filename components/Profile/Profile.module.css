@@ -5,7 +5,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 120px auto 20px auto;
+    margin: 150px auto 50px auto;
     border: 2px solid var(--main-color);
     border-radius: 15px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -28,7 +28,7 @@
 .profileCardMain{
     width: 90%;
     flex-direction: column;
-    margin: auto 10px;
+    margin: 20px 10px;
 }
 .profileCardMain h2{
     font-size: 30px;

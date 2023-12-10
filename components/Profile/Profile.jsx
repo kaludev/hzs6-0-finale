@@ -1,43 +1,60 @@
+"use client"
 import Image from "next/image";
 import styles from "./Profile.module.css"
 import Link from "next/link";
 import { FaCog,FaTimes } from "react-icons/fa";
+import { signOut, useSession } from "next-auth/react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-export default function ProfileSection({name, username, photo
-    ,form,showForm,settings,showSettings,handleSignOut,handleDeactivate,deactivating}){
+export default function ProfileSection(){
+    const { data:session } = useSession();
+    const [settings, setSettings] = useState(false);
+    const [coupons, setCoupons] = useState(false);
+    const [deactivating,setDeactivating] = useState(false);
+
+    const router = useRouter();
+    const handleSignOut = async () => {
+        await signOut();
+        router.push("/");
+    };
+
+    const handleDeactivate = async () => {
+
+    };
     return(
         <section className={styles.profileCard}>
         <div className={styles.profileCardMain}>
             <h2>O nalogu</h2>
             <hr className={styles.divider} />
             <div className={styles.profileHeader}>
-                {photo && <Image className={styles.userPhoto} src={photo} alt="Profile" width={80} height={80}/>}
+                {session?.user.image && <Image className={styles.userPhoto} src={session?.user.image} alt="Profile" width={80} height={80}/>}
                 <div className={styles.userInfo}>
-                    <div className={styles.userFirstName}>{name}</div>
-                    <div className={styles.username}>@{username}</div>
+                    <div className={styles.userFirstName}>{session?.user.name}</div>
+                    <div className={styles.username}>@{session?.user.username}</div>
                 </div>
-                {/* {(form || requests || events) ?
-                    <div onClick={form?  showForm : requests ? showRequests : showEvents} className={styles.userSettings}>
+                {(coupons) ?
+                    <div onClick={() =>{}} className={styles.userSettings}>
                         <FaTimes/>
                     </div>
                     :
-                    <div onClick={showSettings} className={styles.userSettings}>
+                    <div onClick={() =>{ setSettings((prev) => !prev)}} className={styles.userSettings}>
                         {settings? <FaTimes/> : <FaCog />}
                     </div>
-                } */}
+                } 
             </div>
-            <div className={styles.progressPoints}>3748 poena</div>
+            <div className={styles.progressPoints}>{session?.user.points} poena</div>
             <div className={styles.progressBar}></div>
 
 
-            {/* {!form && !settings && !requests && !events && 
+        {!settings && !coupons && 
                 <div className={styles.profileDesc}>
                     <div className={styles.descRow}>
                         <div className={styles.descRowMain}>
                             <div className={styles.descTitle}>Podešavanja naloga</div>
                             <div className={styles.descP}>Pregledajte i uredite vaše podatke</div>
                         </div>
-                        <div onClick={showSettings} className={`${styles.secondaryButton} secondaryButton`}>
+                        <div onClick={() =>{ setSettings((prev) => !prev)}} className={`${styles.secondaryButton} secondaryButton`}>
                             Podešavanja
                         </div>
                     </div>
@@ -60,7 +77,7 @@ export default function ProfileSection({name, username, photo
                         </div>
                     </div>
                 </div>
-            } */}
+            }
             
         </div>
     </section>

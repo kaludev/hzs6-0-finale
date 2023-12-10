@@ -7,9 +7,10 @@ import { FaBars } from "react-icons/fa";
 import { usePathname} from 'next/navigation'
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const Nav = ({setMenuVisible}) => {
-  
+  const router = useRouter();
   const pathname = usePathname()
   const {data: session} = useSession();
   const [ providers, setProviders ] = useState(null);
@@ -40,7 +41,14 @@ const Nav = ({setMenuVisible}) => {
     };
     setUpProviders();
   }, []);
-
+  useEffect(() =>{
+    if(session?.user){
+      if(!session?.user.isPersonalized){
+        router.push('/preferences');
+      }
+    }
+    
+  },[session])
   return (
     <div className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
       <div className={styles.logo}>
@@ -63,16 +71,9 @@ const Nav = ({setMenuVisible}) => {
               <Link className={styles.navLink} href="/ranglist">Rang Lista</Link>
           </li>
           <li>
-              <Link className={styles.navLink} href="/activities">Moj nalog</Link>
-          </li>
-          <li>
           {session?.user ? (
             <div className={styles.navProfile}>
-              {session?.user.isOrganizer && <Link href="/create-event" className={`${styles.secondaryButton} secondaryButton`}>
-                {" "}
-                Dodaj takmičenje
-              </Link>}
-              <button type="button" onClick={async () =>{await signOut(); window.location.href ='/'}} className={`${styles.secondaryButton} secondaryButton`}>
+              <button type="button" onClick={async () =>{await signOut(); window.location.href ='/'}} className={`${styles.primaryButton} primaryButton`}>
                 {" "}
                 Odjavi se
               </button>

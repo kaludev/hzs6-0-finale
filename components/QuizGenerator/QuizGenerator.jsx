@@ -1,20 +1,22 @@
 "use client"
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import "react-toastify/dist/ReactToastify.css";
 import {toast} from 'react-toastify';
 import styles from './quizGenerator.module.css';
 import Webcam from "react-webcam";
+import QuizForm from 'components/QuizFrom/QuizFrom';
 
 const QuizGenerator = () => {
     const { data:session } = useSession();
     const webcamRef = useRef(null);
     const [file, setFile] = useState({
-        value: "",
+        value: {},
         error: false,
         errorMsg: ""
     });
-    const handleSubmit = async () => {
+    const handleSubmit = async (file) => {
+        console.log(file.value)
         if(file.value){
             try{
                 const formData = new FormData();
@@ -39,38 +41,85 @@ const QuizGenerator = () => {
             setFile(copy);
         }
     };
+    const dataURLtoBlob = (dataurl) => {
+        var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+        while(n--){
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new Blob([u8arr], {type:mime});
+    }
     const handleSs = async () => {
         const copy = { ...file};
-        const imageSrc = await webcamRef.current.getScreenshot();
-        console.log(imageSrc);
-        copy.value = imageSrc;
+        const imageSrc = webcamRef.current.getScreenshot();
+        console.log(copy);
+        copy.value = dataURLtoBlob(imageSrc);
+    
+        console.log(copy);
         setFile(copy);
-        handleSubmit();
+        console.log(copy);
+        setFile(copy);
+        console.log(copy);
+        console.log(file);
+        handleSubmit(copy);
+        console.log(file);
     }
+    function getWindowDimensions() {
+        const { innerWidth: width, innerHeight: height } = window;
+        return {
+          width,
+          height
+        };
+      }
+      
+      function useWindowDimensions() {
+        const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+      
+        useEffect(() => {
+          function handleResize() {
+            setWindowDimensions(getWindowDimensions());
+          }
+      
+          window.addEventListener('resize', handleResize);
+          return () => window.removeEventListener('resize', handleResize);
+        }, []);
+      
+        return windowDimensions;
+      }
+      
+      useEffect(() => {
+        getWindowDimensions();
+      },[])
+      
     return (
 
         session?.user ? (<div className={styles.main}>
-            <h1>Quiz Generator</h1>
-            <Webcam
-                className={styles.webcam}
-                audio={false}
-                height={window.height}
-                width={window.width}
-                screenshotFormat="image/jpeg"
-                ref={webcamRef}
-                videoConstraints={{
-                    facingMode: "environment",
-                    height:window.height,
-                    width:window.width
-                }}
-            />
-            <button  onClick={handleSs}>
-                Capture photo
-            </button>
+            <QuizForm />
+            {innerWidth < 1024 ?
+                <>
+                    <Webcam
+                        className={styles.webcam}
+                        audio={false}
+                        height={window.height}
+                        width={window.width}
+                        screenshotFormat="image/jpeg"
+                        ref={webcamRef}
+                        videoConstraints={{
+                            facingMode: "environment",
+                            height:window.height,
+                            width:window.width
+                        }}
+                    />
+                    <button  onClick={handleSs}>
+                        Capture photo
+                    </button>
+                </> : ""}
             <p className={styles.errorMessage}>{file.errorMsg}</p>
-        </div>) : <div className={styles.main}>
-            {/*Nikola promeni ovo*/}
-            <p>Molimo ulogujte se da bi nastavili</p>
+        </div>) : 
+        <div className={styles.main}>
+            <div className={styles.notFound}>
+                <span className={styles.colored}>Morate se prijaviti.</span><br />Da biste radili kvizove i zaradili poene morate se prvo prijaviti.
+            </div>
         </div>
 
     )

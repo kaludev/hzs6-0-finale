@@ -10,7 +10,7 @@
     pointer-events: none;
     flex-direction: column;
     justify-content: space-between;
-    background-color: #f1f1e3;
+    background-color: #fff;
     transform: translateX(400px);
     overflow-y: auto;
     overflow-x: hidden;
@@ -30,20 +30,16 @@
     align-items: center;
     font-weight: 600;
     font-size: 18px;
-    color: var();
 }
 .menuIconClose{
     width: 100%;
-    display: flex; /* display: none; */
+    display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
     padding: 20px;
     font-size: 20px;
     color: var(--main-color);
-}
-.menuIconClose.showX{
-    /* display: flex; kada setVisible proradi vratiti*/ 
 }
 .sideNav{
     width: 100%;
@@ -77,6 +73,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.primaryButton{
+    color: #fff;
 }
 .primaryButton:hover{
     color: var(--main-color);
