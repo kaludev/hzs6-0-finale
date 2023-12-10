@@ -48,7 +48,7 @@ const Discover = () => {
                     }
 
                 setPoeni(data2.data.reward_points);
-                const points = poeni / 2;
+                const points = session?.user.points + poeni / 2;
 
                 const res3 = await fetch("/api/updatePoints", {
                     method: "POST",
@@ -57,7 +57,7 @@ const Discover = () => {
                     },
                     body: JSON.stringify({points})
                 });
-                const json3 = await res.json();
+                const json3 = await res3.json();
                 if(json3.ok){
                     console.log("Bodovi uspesno updateovani");
                 }
