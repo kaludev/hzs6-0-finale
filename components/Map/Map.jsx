@@ -8,7 +8,7 @@ import Link from 'next/link';
 const Map = () => {
     const [yourLocation, setYourLocation] = useState({});
     //const [closestMarker, setClosestMarker] = useState(null);
-    //const [directions, setDirections] = useState(null);
+    const [directions, setDirections] = useState([]);
     //const [closestEvent, setClosestEvent] = useState(null);
     const [quizes, setQuizes] = useState([]);
     const [location, setLocation] = useState([]);
@@ -51,6 +51,17 @@ const Map = () => {
             const arr = [...prev, {...quiz, location}];
             return removeDuplicates(arr);
         });
+    }
+
+    const handleGeocoding = async (x) => {
+        const resg = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+            x.place
+        )}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`);
+
+        const jsong = await resg.json();
+        console.log("jsong", jsong.results[0].geometry.location);
+        x.location = jsong.results[0].geometry.location;
+
     }
 
     useEffect(() => {
@@ -171,14 +182,14 @@ const Map = () => {
 
     }, [directions]);*/
 
-    /*const handleDirections = () => {
-      if (yourLocation && closestMarker && !directions) {
+    const handleDirections = (location) => {
+      if (yourLocation && !directions) {
         const directionsService = new window.google.maps.DirectionsService();
   
         directionsService.route(
           {
             origin: new window.google.maps.LatLng(yourLocation.lat, yourLocation.lng),
-            destination: new window.google.maps.LatLng(closestMarker.lat, closestMarker.lng),
+            destination: new window.google.maps.LatLng(location.lat, location.lng),
             travelMode: 'DRIVING',
           },
           (result, status) => {
@@ -190,7 +201,7 @@ const Map = () => {
           }
         );
       }
-    };*/
+    };
 
     /*const returnClosest = () => {
       if(yourLocation && closestMarker){
@@ -211,6 +222,29 @@ const Map = () => {
         setSelectedMarker(null);
     };
 
+    const handleAcceptQuiz = async (data) => {
+        if(session?.user){
+            const res = await fetch("/api/acceptQuiz", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+            const json = await res.json();
+            if(json.ok){
+                console.log("ok");
+                json.data.task.map(async (x) => {
+                    await handleGeocoding(x.address);
+                    handleDirections(x.location);
+                });
+            }
+            else{
+                console.log("nije ok");
+            }
+        }
+    }
+
     return (
       <>
       {
@@ -226,9 +260,9 @@ const Map = () => {
                     )
                 }
                 {
-                    
-                }
-                {
+                    session?.user.active_quiz.task.length == 0 ? (
+                        <>
+                            {
                     <>
                     {console.log(location)}
                     {
@@ -251,11 +285,29 @@ const Map = () => {
                   <h5>{`Pocinje: ${new Date(selectedMarker.starts_at).toLocaleDateString()}`}</h5>
                   <h5>{`Zavrsava se: ${new Date(selectedMarker.ends_at).toLocaleDateString()}`}</h5>
                   <h3>{`Nagrada: ${selectedMarker.reward_points}`}</h3>
-                  <Link href={`/api/acceptquest/${selectedMarker._id}`}><button>Zapocni kviz</button></Link>
+                  <button onClick={() => handleAcceptQuiz(selectedMarker)}>Zapocni kviz</button>
                   {/* Add other content as needed */}
                 </div>
               </InfoWindowF>
             )}
+                        </>
+                    ) :
+                    <>
+                        {
+                            session?.user.active_quiz.task.map(async (x) => {
+                                await handleGeocoding(x);
+                                handleDirections(x.location);
+                                return (
+                                    <>
+                                        <MarkerF position={x.location}></MarkerF>
+                                        <DirectionsRenderer directions={directions}></DirectionsRenderer>
+                                    </>
+                                )
+                            })
+                        }
+                    </>
+                }
+                
             </GoogleMap>
             </div>
         )
