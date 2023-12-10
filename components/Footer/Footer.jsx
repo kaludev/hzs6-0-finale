@@ -14,10 +14,10 @@ export default function Footer({dark}) {
                 <div className={styles.footerCol}>
                     <h3>Stranice</h3>
                     <div className={styles.footerLink}><Link href="/">Početna</Link></div>
-                    <div className={styles.footerLink}><Link href="/about">Partneri</Link></div>
-                    <div className={styles.footerLink}><Link href="/arena">Pretraži lokaciju</Link></div>
-                    <div className={styles.footerLink}><Link href="/ranglist">Sakupi bodove</Link></div>
-                    <div className={styles.footerLink}><Link href="/activities">Rang lista</Link></div>
+                    <div className={styles.footerLink}><Link href="/partners">Partneri</Link></div>
+                    <div className={styles.footerLink}><Link href="/discover">Pretraži lokaciju</Link></div>
+                    <div className={styles.footerLink}><Link href="/gatherPoints">Sakupi bodove</Link></div>
+                    <div className={styles.footerLink}><Link href="/ranglist">Rang lista</Link></div>
                 </div>
                 <div className={styles.footerCol}>
                     <h3>Vaši podaci</h3>
