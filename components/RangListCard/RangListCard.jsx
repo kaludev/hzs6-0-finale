@@ -3,8 +3,6 @@
 import Link from "next/link";
 import { useState } from "react";
 import styles from "./RangListCard.module.css"
-import { FaRegHeart } from "react-icons/fa";
-import { FaClock, FaMapMarkerAlt, FaHeart, FaCalendarAlt } from "react-icons/fa";
 
 export default function RangListCard({card}){
 

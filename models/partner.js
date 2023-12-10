@@ -24,6 +24,9 @@ const partnerSchema = new Schema({
             ] 
         */
         type: [Object] 
+    },
+    img: {
+        type: String
     }
 });
 

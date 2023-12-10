@@ -11,7 +11,8 @@ const images = [
   "/images/imgLogo.png",
   "/images/knjazLogo.png",
   "/images/unijaLogo.png",
-  "/images/wargamingLogo.png"
+  "/images/wargamingLogo.png",
+  "/images/fonisLogo.png"
 ]
 
 const settings = {

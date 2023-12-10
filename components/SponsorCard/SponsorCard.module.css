@@ -1,33 +1,33 @@
 .cardsMainSection{
     margin: 100px auto 0 auto;
     width: 70%;
-    max-width: 968px;
+    max-width: 1020px;
 }
-.cardEvent{
+.cardsSection{
     width: 100%;
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    flex-wrap: wrap;
     padding: 5px 15px;
 }
-.eventMain{
+.sponsorCard{
     display: flex;
     flex-direction: column;
+    width: 300px;
+    height: 200px;
+    margin: 15px 15px;
+    border-radius: 10px;
 }
-.eventName{
+.sponsorImg{
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    border-radius: 10px 0 0 10px;
+}
+.sponsorName{
     font-size: 18px;
     font-weight: 600;
-}
-.eventUsername{
-    font-size: 14px;
-    opacity: 0.7;
-}
-.eventImg{
-    width: 60px;
-    height: 60px;
-    margin: 10px;
-    border-radius: 50%;
+    padding: 10px 0;
 }
 @media only screen and (max-width: 700px) {
     .cardsMainSection{
