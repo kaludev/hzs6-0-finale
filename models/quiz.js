@@ -36,6 +36,9 @@ const quizSchema = new Schema({
     reward_points: {
         type: Number,
         required: true
+    },
+    interests: {
+        type: String
     }
 })
 

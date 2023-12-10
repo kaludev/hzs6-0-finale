@@ -14,4 +14,12 @@
     font-size: 20px;
     font-weight: 600;
     color: var(--main-color);
+    margin-top: 80px;
+}
+
+.webCam{
+    z-index: 0;
+}
+.button{
+    z-index: 2;
 }

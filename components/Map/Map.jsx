@@ -1,23 +1,25 @@
 "use client"
+import styles from './Map.module.css'
 import { useSession } from 'next-auth/react';
 import {useState, useEffect} from 'react';
-import styles from "./Map.module.css"
-import { GoogleMap, LoadScript, MarkerF, DirectionsService, DirectionsRenderer, useJsApiLoader } from '@react-google-maps/api';
-//import { useSession } from 'next-auth/react';
+import { GoogleMap, MarkerF, DirectionsService, DirectionsRenderer, useJsApiLoader } from '@react-google-maps/api';
 
 const Map = () => {
     const [yourLocation, setYourLocation] = useState({});
     //const [closestMarker, setClosestMarker] = useState(null);
     //const [directions, setDirections] = useState(null);
     //const [closestEvent, setClosestEvent] = useState(null);
-    const [ifNextEvent, setIfNextEvent] = useState();
-    //const [events, setEvents] = useState([]);
+    const [quizes, setQuizes] = useState([]);
+    const [location, setLocation] = useState([]);
+
     const { isLoaded } = useJsApiLoader({
       googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
     })
+
     useEffect(() => {
 
     }, [isLoaded])
+
     const {data: session} = useSession();
 
     useEffect(() => {
@@ -29,8 +31,35 @@ const Map = () => {
             console.log(err);
           });
         }
+        const getQuizes = async () => {
+            const res = await fetch("/api/getQuizes");
+            const json = await res.json();
+            console.log(json);
+            setQuizes(json.data);   
+        }
+        getQuizes();
+        
         
     }, []);
+
+    const updateLocation = (data) => {
+        setLocation((prev) => [...prev, data]);
+    }
+
+    useEffect(() => {
+        console.log("aosasop");
+        console.log(quizes);
+            quizes.map(async (x) => {
+                    const resg = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+                        x.place
+                    )}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`);
+
+                    const jsong = await resg.json();
+                    console.log("jsong", jsong);
+                    updateLocation(jsong.results[0].geometry.location);
+            });
+        
+    }, [quizes]);
 
     /*if(mode == "user"){
       useEffect(() => {
@@ -63,8 +92,8 @@ const Map = () => {
     
 
     const containerStyle = {
-      width: '1024px',
-      height: '500px',
+      width: '100%',
+      height: '100%',
     };
 
     /*const findClosestMarker = (userLocation, mode) => {
@@ -108,7 +137,6 @@ const Map = () => {
               }
           });
         }
-        setIfNextEvent(bool);
         setClosestMarker(closestMarker);
         setClosestEvent(closestEvent);
     };*/
@@ -180,6 +208,11 @@ const Map = () => {
                         {console.log(yourLocation)}
                         <MarkerF position={yourLocation} title="Your location" />
                     </>
+                    )
+                }
+                {
+                    location.map(loc => 
+                        <MarkerF key={quizes.indexOf(location)} position={loc} />
                     )
                 }
             </GoogleMap>

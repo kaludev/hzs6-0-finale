@@ -25,4 +25,8 @@ const partnerSchema = new Schema({
         */
         type: [Object] 
     }
-})
+});
+
+const Partner = models.Partner || model("Partner", partnerSchema);
+
+export default Partner;

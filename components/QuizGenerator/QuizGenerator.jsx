@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import "react-toastify/dist/ReactToastify.css";
 import {toast} from 'react-toastify';
@@ -9,17 +9,14 @@ import QuizForm from 'components/QuizFrom/QuizFrom';
 
 const QuizGenerator = () => {
     const { data:session } = useSession();
+    const webcamRef = useRef(null);
     const [file, setFile] = useState({
-        value: "",
+        value: {},
         error: false,
         errorMsg: ""
     });
-    const handleChange = (e) =>{
-        const copy = { ...file};
-        copy.value = e.target.files[0];
-        setFile(copy);
-    }
     const handleSubmit = async () => {
+        console.log(file.value)
         if(file.value){
             try{
                 const formData = new FormData();
@@ -44,23 +41,49 @@ const QuizGenerator = () => {
             setFile(copy);
         }
     };
+    const dataURLtoBlob = (dataurl) => {
+        var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+        while(n--){
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new Blob([u8arr], {type:mime});
+    }
+    const handleSs = () => {
+        const copy = { ...file};
+        const imageSrc = webcamRef.current.getScreenshot();
+        console.log(imageSrc);
+        copy.value = dataURLtoBlob(imageSrc);
+    
+        console.log(copy);
+        setFile(copy);
+        console.log(copy);
+        console.log(file)
+        handleSubmit();
+        console.log(file)
+    }
     return (
 
         session?.user ? (<div className={styles.main}>
             <Webcam
+                className={styles.webcam}
                 audio={false}
-                height={1080}
-                width={1080}
+                height={window.height}
+                width={window.width}
                 screenshotFormat="image/jpeg"
+                ref={webcamRef}
                 videoConstraints={{
                     facingMode: "environment",
-                    width: 1080,
-                    height: 1080
+                    height:window.height,
+                    width:window.width
                 }}
             />
             <QuizForm />
             <input type="file" onChange={handleChange} />
             <button type="button" onClick={handleSubmit}>Submit</button>
+            <button  onClick={handleSs}>
+                Capture photo
+            </button>
             <p className={styles.errorMessage}>{file.errorMsg}</p>
         </div>) : 
         <div className={styles.main}>
