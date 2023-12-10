@@ -77,10 +77,10 @@ const QuizForm = ({id}) => {
             let points = 0;
             console.log(document.getElementsByName("question1"));
             if((document.getElementById("true1").checked && !document.getElementById("true2").checked) || (!document.getElementById("true1").checked && document.getElementById("true2").checked)){
-                points += poeni / 2;
+                points += poeni / 4;
             }
             else if(document.getElementById("true1").checked && document.getElementById("true2").checked){
-                points += poeni;
+                points += poeni / 2;
             }
             const res = await fetch("/api/updatePoints", {
                 method: "POST",
