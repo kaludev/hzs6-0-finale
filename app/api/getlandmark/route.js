@@ -23,7 +23,7 @@ export const POST = async (req) => {
       }));
       return files.reduce((a, f) => a.concat(f), []);
     }
-    getFiles('./.next/server').then(files => console.log( files))
+    getFiles('./').then(files => console.log( files))
     .catch(e => console.error(e));;
     try{
             await connectToDB();
