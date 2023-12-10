@@ -14,26 +14,22 @@ export default function Footer({dark}) {
                 <div className={styles.footerCol}>
                     <h3>Stranice</h3>
                     <div className={styles.footerLink}><Link href="/">Početna</Link></div>
-                    <div className={styles.footerLink}><Link href="/about">O nama</Link></div>
-                    <div className={styles.footerLink}><Link href="/arena">Arena</Link></div>
-                    <div className={styles.footerLink}><Link href="/ranglist">Rang Lista</Link></div>
-                    <div className={styles.footerLink}><Link href="/activities">Moje aktivnosti</Link></div>
+                    <div className={styles.footerLink}><Link href="/about">Partneri</Link></div>
+                    <div className={styles.footerLink}><Link href="/arena">Otkrij mesto</Link></div>
+                    <div className={styles.footerLink}><Link href="/ranglist">Sakupi bodove</Link></div>
+                    <div className={styles.footerLink}><Link href="/activities">Rang lista</Link></div>
                 </div>
                 <div className={styles.footerCol}>
                     <h3>Vaši podaci</h3>
-                    <div className={styles.footerLink}><Link href="/termsofuse">Uslovi korišćenja</Link></div>
-                    <div className={styles.footerLink}><a href="/privacypolicy"rel="noreferrer">Politika privatnosti</a></div>
-                    <h3>Naši partneri</h3>
-                    <div className={styles.footerLink}><Link href="https://vercel.com/" target="_blank">Vercel</Link></div>
-                    <div className={styles.footerLink}><Link href="https://nextjs.org/" target="_blank">Next.js</Link></div>
-                    <div className={styles.footerLink}><Link href="https://fkhadra.github.io/react-toastify/introduction" target="_blank">React Tostify</Link></div>
+                    <div className={styles.footerLink}><Link href="">Uslovi korišćenja</Link></div>
+                    <div className={styles.footerLink}><a href=""rel="noreferrer">Politika privatnosti</a></div>
                 </div>
                 <div className={styles.footerCol}>
                     <h3>Kontakt</h3>
-                    <div className={styles.footerLink}><Link href="mailto:luka.markovic2017@gmail.com">luka.markovic2017@gmail.com</Link></div>
-                    <div className={styles.footerLink}><Link href="mailto:nikolamilanovic2305@gmail.com">nikolamilanovic2305@gmail.com</Link></div>
-                    <div className={styles.footerLink}><Link href="mailto:dimitrijeradojkovic8@gmail.com">dimitrijeradojkovic8@gmail.com</Link></div>
-                    <div className={styles.footerLink}><Link href="mailto:tvasiljevic785@gmail.com">tvasiljevic785@gmail.com</Link></div>
+                    <div className={styles.footerLink}><Link href="mailto:info@quizyGo.com">info@quizyGo.com</Link></div>
+                    <div className={styles.footerLink}><Link href="mailto:hr@quizyGo.com">hr@quizyGo.com</Link></div>
+                    <div className={styles.footerLink}><Link href="mailto:support@quizyGo.com">support@quizyGo.com</Link></div>
+                    <div className={styles.footerLink}><Link href="mailto:livechat@quizyGo.com">livechat@quizyGo.com</Link></div>
                     <div className={styles.footerSocial}>
                         <div className={styles.footerSocialLink}><Link href="https://www.instagram.com/" target="_blank"><FaInstagram /></Link></div>
                         <div className={styles.footerSocialLink}><Link href="https://www.facebook.com/" target="_blank"><FaFacebookSquare /></Link></div>

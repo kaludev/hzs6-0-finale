@@ -124,9 +124,7 @@ const Discover = () => {
                                 width:window.width
                             }}
                         />
-                        <button  onClick={handleSs}>
-                            Capture photo
-                        </button>
+                        <div onClick={handleSs} className={`${styles.primaryButton} primaryButton`}>Slikaj</div>
                     </>
                     }
                     {loaded && 
