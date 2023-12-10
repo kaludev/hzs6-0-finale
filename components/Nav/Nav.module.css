@@ -121,6 +121,13 @@
     color: #000;
 }
 
+.navbar.scrolled .primaryButton{
+    color: #fff;
+}
+.navbar.scrolled .primaryButton:hover{
+    color: var(--main-color);
+}
+
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (max-width: 1220px) {
     .nav {
