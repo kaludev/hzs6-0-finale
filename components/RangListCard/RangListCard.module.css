@@ -1,3 +1,8 @@
+.cardsMainSection{
+    margin: 100px auto 0 auto;
+    width: 70%;
+    max-width: 968px;
+}
 .cardEvent{
     width: 100%;
     display: flex;

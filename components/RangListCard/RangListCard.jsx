@@ -15,7 +15,7 @@ export default function RangListCard({user,email,tel,events,likes}){
                             <div className={styles.eventName}>Ime i prezime</div>
                             <div className={styles.eventUsername}>@username</div>
                         </div>
-                        <img className={styles.eventImg} />slika
+                        <img className={styles.eventImg} />
                     </div>
         
     )

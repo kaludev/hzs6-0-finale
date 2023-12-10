@@ -6,7 +6,9 @@ const RangListSection = () => {
     return (
         <section className={styles.cardsMainSection}>
             <section className={styles.cardsSection}>
-                <RangListCards />
+                <RangListCard />
+                <RangListCard />
+                <RangListCard />
             </section>
         </section>
     )
