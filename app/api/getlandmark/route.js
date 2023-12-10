@@ -11,7 +11,7 @@ const client = new vision.ImageAnnotatorClient();
 export const POST = async (req) => {
     const user = await getServerSession(authOptions);
     console.log(user);
-    console.log(readdirSync('./___vc/__launcher'));
+    console.log(readdirSync('./.next'));
     try{
             await connectToDB();
             const formData = await req.formData();
