@@ -2,6 +2,7 @@ import Map from "@/components/Map/Map"
 import HeroSection from "@/components/Hero/Hero"
 import SponsorsSection from "@/components/Sponsors/Sponsors"
 import AboutSection from "@/components/About/About"
+import FinalSection from "@components/FinalSection/FinalSection"
 
 export default function Home() {
   return (
@@ -9,7 +10,7 @@ export default function Home() {
       <HeroSection />
       <SponsorsSection />
       <AboutSection />
-      <Map />
+      <FinalSection />
     </>
   )
 }
