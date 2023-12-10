@@ -23,6 +23,7 @@ const authOptions = {
       session.user.username = sessionUser.username;
       session.user.name = sessionUser.name;
       session.user.isPersonalized = sessionUser.isPersonalized;
+      session.user.points = sessionUser.points;
       if(sessionUser.active_quiz){
         session.user.active_quiz = sessionUser.active_quiz;
       }

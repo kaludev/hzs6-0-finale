@@ -1,20 +1,22 @@
+"use client"
 import Image from "next/image";
 import styles from "./Profile.module.css"
 import Link from "next/link";
 import { FaCog,FaTimes } from "react-icons/fa";
+import { useSession } from "next-auth/react";
 
-export default function ProfileSection({name, username, photo
-    ,form,showForm,settings,showSettings,handleSignOut,handleDeactivate,deactivating}){
+export default function ProfileSection(){
+    const { data:session } = useSession()
     return(
         <section className={styles.profileCard}>
         <div className={styles.profileCardMain}>
             <h2>O nalogu</h2>
             <hr className={styles.divider} />
             <div className={styles.profileHeader}>
-                {photo && <Image className={styles.userPhoto} src={photo} alt="Profile" width={80} height={80}/>}
+                {session?.user.image && <Image className={styles.userPhoto} src={session?.user.image} alt="Profile" width={80} height={80}/>}
                 <div className={styles.userInfo}>
-                    <div className={styles.userFirstName}>{name}</div>
-                    <div className={styles.username}>@{username}</div>
+                    <div className={styles.userFirstName}>{session?.user.name}</div>
+                    <div className={styles.username}>@{session?.user.username}</div>
                 </div>
                 {/* {(form || requests || events) ?
                     <div onClick={form?  showForm : requests ? showRequests : showEvents} className={styles.userSettings}>
@@ -26,7 +28,7 @@ export default function ProfileSection({name, username, photo
                     </div>
                 } */}
             </div>
-            <div className={styles.progressPoints}>3748 poena</div>
+            <div className={styles.progressPoints}>{session?.user.points} poena</div>
             <div className={styles.progressBar}></div>
 
 
