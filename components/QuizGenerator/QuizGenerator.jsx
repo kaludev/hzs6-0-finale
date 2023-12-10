@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import {toast} from 'react-toastify';
 import styles from './quizGenerator.module.css';
 import Webcam from "react-webcam";
+import QuizForm from 'components/QuizFrom/QuizFrom';
 
 const QuizGenerator = () => {
     const { data:session } = useSession();
@@ -46,7 +47,6 @@ const QuizGenerator = () => {
     return (
 
         session?.user ? (<div className={styles.main}>
-            <h1>Quiz Generator</h1>
             <Webcam
                 audio={false}
                 height={1080}
@@ -58,12 +58,15 @@ const QuizGenerator = () => {
                     height: 1080
                 }}
             />
+            <QuizForm />
             <input type="file" onChange={handleChange} />
             <button type="button" onClick={handleSubmit}>Submit</button>
             <p className={styles.errorMessage}>{file.errorMsg}</p>
-        </div>) : <div className={styles.main}>
-            {/*Nikola promeni ovo*/}
-            <p>Molimo ulogujte se da bi nastavili</p>
+        </div>) : 
+        <div className={styles.main}>
+            <div className={styles.notFound}>
+                <span className={styles.colored}>Morate se prijaviti.</span><br />Da biste radili kvizove i zaradili poene morate se prvo prijaviti.
+            </div>
         </div>
 
     )
