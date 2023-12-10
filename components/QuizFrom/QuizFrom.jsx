@@ -17,7 +17,7 @@ const QuizForm = ({type,submitBody}) => {
 
         const handleSubmit = () =>{
             if (!event.question1) {
-                Setquestion1Err('Morate uneti tip događaja');
+                Setquestion1Err('Morate izabrati odgovor');
                 setValid(false);
             }
             else{
@@ -25,7 +25,7 @@ const QuizForm = ({type,submitBody}) => {
             }
 
             if (!event.question2) {
-                Setquestion1Err('Morate uneti tip događaja');
+                Setquestion2Err('Morate izabrati odgovor');
                 setValid(false);
             }
             else{

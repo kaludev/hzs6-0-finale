@@ -10,7 +10,7 @@
     pointer-events: none;
     flex-direction: column;
     justify-content: space-between;
-    background-color: #f1f1e3;
+    background-color: #fff;
     transform: translateX(400px);
     overflow-y: auto;
     overflow-x: hidden;
@@ -30,7 +30,6 @@
     align-items: center;
     font-weight: 600;
     font-size: 18px;
-    color: var();
 }
 .menuIconClose{
     width: 100%;
