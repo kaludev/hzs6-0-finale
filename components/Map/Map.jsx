@@ -6,6 +6,7 @@ import { GoogleMap, MarkerF, DirectionsService, DirectionsRenderer, useJsApiLoad
 import Link from 'next/link';
 
 const Map = ({marker}) => {
+    const {data: session} = useSession();
     const [yourLocation, setYourLocation] = useState({});
     //const [closestMarker, setClosestMarker] = useState(null);
     const [directions, setDirections] = useState([]);
@@ -21,10 +22,6 @@ const Map = ({marker}) => {
     //const [directions, setDirections] = useState(null);
     //const [closestEvent, setClosestEvent] = useState(null);
     if(!marker){
-      
-      
-
-      const {data: session} = useSession();
 
     useEffect(() => {
         console.log(isLoaded);
@@ -312,29 +309,6 @@ const Map = ({marker}) => {
         setSelectedMarker(null);
     };
 
-    const handleAcceptQuiz = async (data) => {
-        if(session?.user){
-            const res = await fetch("/api/acceptQuiz", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
-            });
-            const json = await res.json();
-            if(json.ok){
-                console.log("ok");
-                json.data.task.map(async (x) => {
-                    await handleGeocoding(x.address);
-                    handleDirections(x.location);
-                });
-            }
-            else{
-                console.log("nije ok");
-            }
-        }
-    }
-
     return (
       <>
       {
@@ -375,11 +349,11 @@ const Map = ({marker}) => {
                   <h5>{`Pocinje: ${new Date(selectedMarker.starts_at).toLocaleDateString()}`}</h5>
                   <h5>{`Zavrsava se: ${new Date(selectedMarker.ends_at).toLocaleDateString()}`}</h5>
                   <h3>{`Nagrada: ${selectedMarker.reward_points}`}</h3>
-                  <button onClick={() => handleAcceptQuiz(selectedMarker)}>Zapocni kviz</button>
+                  <Link href={`/quiz/${selectedMarker._id}`}><button>Zapocni kviz</button></Link>
                   {/* Add other content as needed */}
                 </div>
               </InfoWindowF>
-            )} 
+                )} 
             </GoogleMap>
             </div>
         )

@@ -7,7 +7,7 @@ import styles from './quizGenerator.module.css';
 import Webcam from "react-webcam";
 import QuizForm from 'components/QuizFrom/QuizFrom';
 
-const QuizGenerator = () => {
+const QuizGenerator = ({id}) => {
     const { data:session } = useSession();
     const webcamRef = useRef(null);
     const [file, setFile] = useState({
@@ -24,7 +24,18 @@ const QuizGenerator = () => {
                 const res = await fetch('/api/getQuestions',{
                     method : "POST",
                     body: formData
-                })
+                });
+                const res_a = await fetch("/api/acceptQuiz", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({id})
+                });
+                const json_a = await res_a.json();
+                if(json_a.ok){
+                    console.log("Uspesno dodat active quiz");
+                }
                 if(!res.ok){
                     throw new Error(await res.json());
                 }
