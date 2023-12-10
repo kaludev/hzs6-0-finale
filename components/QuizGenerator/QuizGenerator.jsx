@@ -39,7 +39,7 @@ const QuizGenerator = () => {
             setFile(copy);
         }
     };
-    const handleSs = () => {
+    const handleSs = async () => {
         const copy = { ...file};
         const imageSrc = await webcamRef.current.getScreenshot();
         console.log(imageSrc);
