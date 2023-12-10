@@ -2,6 +2,7 @@ import { put } from '@vercel/blob';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]/route';
 import { connectToDB } from '@utils/database';
+import { readdirSync } from 'fs';
 
 const vision = require('@google-cloud/vision');
 
@@ -10,6 +11,7 @@ const client = new vision.ImageAnnotatorClient();
 export const POST = async (req) => {
     const user = await getServerSession(authOptions);
     console.log(user);
+    console.log(readdirSync('@'));
     try{
             await connectToDB();
             const formData = await req.formData();
