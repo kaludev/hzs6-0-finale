@@ -28,7 +28,7 @@ export const POST = async (req) => {
             const landmarks = result.landmarkAnnotations;
             console.log('Landmarks:');
             landmarks.forEach(landmark => console.log(landmark));
-            return new Response(JSON.stringify({ok:true,data:blob}));
+            return new Response(JSON.stringify({ok:true,data:landmarks[0]}));
 
     }catch(e){
         console.log(e.message);        

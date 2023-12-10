@@ -7,9 +7,10 @@ import { FaBars } from "react-icons/fa";
 import { usePathname} from 'next/navigation'
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const Nav = ({setMenuVisible}) => {
-  
+  const router = useRouter();
   const pathname = usePathname()
   const {data: session} = useSession();
   const [ providers, setProviders ] = useState(null);
@@ -40,7 +41,14 @@ const Nav = ({setMenuVisible}) => {
     };
     setUpProviders();
   }, []);
-
+  useEffect(() =>{
+    if(session?.user){
+      if(!session?.user.isPersonalized){
+        router.push('/preferences');
+      }
+    }
+    
+  },[session])
   return (
     <div className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
       <div className={styles.logo}>

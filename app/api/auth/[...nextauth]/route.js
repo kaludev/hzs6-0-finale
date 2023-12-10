@@ -22,6 +22,7 @@ const authOptions = {
       session.user.image = sessionUser.image.toString();
       session.user.username = sessionUser.username;
       session.user.name = sessionUser.name;
+      session.user.isPersonalized = sessionUser.isPersonalized;
       if(sessionUser.active_quiz){
         session.user.active_quiz = sessionUser.active_quiz;
       }
@@ -40,6 +41,7 @@ const authOptions = {
             username: profile.name.replace(" ", "").toLowerCase(),
             name:profile.name,
             image: profile.picture,
+
           });
         }
         return true;

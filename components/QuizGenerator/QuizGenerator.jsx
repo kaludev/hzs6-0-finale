@@ -15,7 +15,7 @@ const QuizGenerator = () => {
         error: false,
         errorMsg: ""
     });
-    const handleSubmit = async () => {
+    const handleSubmit = async (file) => {
         console.log(file.value)
         if(file.value){
             try{
@@ -49,18 +49,20 @@ const QuizGenerator = () => {
         }
         return new Blob([u8arr], {type:mime});
     }
-    const handleSs = () => {
+    const handleSs = async () => {
         const copy = { ...file};
         const imageSrc = webcamRef.current.getScreenshot();
-        console.log(imageSrc);
+        console.log(copy);
         copy.value = dataURLtoBlob(imageSrc);
     
         console.log(copy);
         setFile(copy);
         console.log(copy);
-        console.log(file)
-        handleSubmit();
-        console.log(file)
+        setFile(copy);
+        console.log(copy);
+        console.log(file);
+        handleSubmit(copy);
+        console.log(file);
     }
     function getWindowDimensions() {
         const { innerWidth: width, innerHeight: height } = window;
