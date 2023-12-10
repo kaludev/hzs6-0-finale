@@ -2,6 +2,7 @@ import { put } from '@vercel/blob';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]/route';
 import { connectToDB } from '@utils/database';
+import Quiz from '@models/quiz';
 
 const vision = require('@google-cloud/vision');
 
@@ -27,8 +28,14 @@ export const POST = async (req) => {
               );
             const landmarks = result.landmarkAnnotations;
             console.log('Landmarks:');
-            landmarks.forEach(landmark => console.log(landmark));
-            return new Response(JSON.stringify({ok:true,data:landmarks[0]}));
+            let valid = false;
+            const requestedLandmark = Quiz.findById(user.user.active_quiz)
+            landmarks.forEach(landmark => {
+                if(landmark.description == requestedLandmark.place){
+                    valid = true;
+                }
+            });
+            return new Response(JSON.stringify({ok:true,valid:valid}));
 
     }catch(e){
         console.log(e.message);        

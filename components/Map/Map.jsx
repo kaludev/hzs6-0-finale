@@ -7,7 +7,9 @@ import Link from 'next/link';
 
 const Map = ({marker}) => {
     const [yourLocation, setYourLocation] = useState({});
-    const {data: session} = useSession();
+    //const [closestMarker, setClosestMarker] = useState(null);
+    const [directions, setDirections] = useState([]);
+    //const [closestEvent, setClosestEvent] = useState(null);
     const [quizes, setQuizes] = useState([]);
     const [location, setLocation] = useState([]);
     const [selectedMarker, setSelectedMarker] = useState(null);
@@ -24,6 +26,66 @@ const Map = ({marker}) => {
 
       const {data: session} = useSession();
 
+    useEffect(() => {
+        console.log(isLoaded);
+            if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition((pos) => {
+                console.log(pos);
+                setYourLocation({lat: pos.coords.latitude, lng: pos.coords.longitude});          
+            }, (err) => {
+                console.log(err);
+            });
+            }
+            fetch("/api/getQuizes").then(data => data.json()).then((json) => {
+                console.log(json);
+                setQuizes(json.data);
+            });
+    }, [isLoaded]);
+
+    function removeDuplicates(arr) {
+        let unique = [];
+        arr.forEach(element => {
+            if (!unique.includes(element)) {
+                unique.push(element);
+            }
+        });
+        return unique;
+    }
+
+    const updateLocation = (quiz, location) => {
+        setLocation((prev) => {
+            const arr = [...prev, {...quiz, location}];
+            return removeDuplicates(arr);
+        });
+    }
+
+    const handleGeocoding = async (x) => {
+        const resg = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+            x.place
+        )}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`);
+
+        const jsong = await resg.json();
+        console.log("jsong", jsong.results[0].geometry.location);
+        x.location = jsong.results[0].geometry.location;
+
+    }
+
+    useEffect(() => {
+
+                quizes.map(async (x) => {
+                        const resg = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+                            x.place
+                        )}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`);
+
+                        const jsong = await resg.json();
+                        console.log("jsong", jsong.results[0].geometry.location);
+                        x.location = jsong.results[0].geometry.location;
+                });
+                console.log("quizes posle x.location u map", quizes);
+                setLocation(quizes);
+    }, [quizes.length > 0, isLoaded]);
+
+    /*if(mode == "user"){
       useEffect(() => {
           console.log(isLoaded);
               if(navigator.geolocation){
@@ -210,14 +272,14 @@ const Map = ({marker}) => {
 
     }, [directions]);*/
 
-    /*const handleDirections = () => {
-      if (yourLocation && closestMarker && !directions) {
+    const handleDirections = (location) => {
+      if (yourLocation && !directions) {
         const directionsService = new window.google.maps.DirectionsService();
   
         directionsService.route(
           {
             origin: new window.google.maps.LatLng(yourLocation.lat, yourLocation.lng),
-            destination: new window.google.maps.LatLng(closestMarker.lat, closestMarker.lng),
+            destination: new window.google.maps.LatLng(location.lat, location.lng),
             travelMode: 'DRIVING',
           },
           (result, status) => {
@@ -229,7 +291,7 @@ const Map = ({marker}) => {
           }
         );
       }
-    };*/
+    };
 
     /*const returnClosest = () => {
       if(yourLocation && closestMarker){
@@ -249,6 +311,29 @@ const Map = ({marker}) => {
     const handleInfoWindowClose = () => {
         setSelectedMarker(null);
     };
+
+    const handleAcceptQuiz = async (data) => {
+        if(session?.user){
+            const res = await fetch("/api/acceptQuiz", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+            const json = await res.json();
+            if(json.ok){
+                console.log("ok");
+                json.data.task.map(async (x) => {
+                    await handleGeocoding(x.address);
+                    handleDirections(x.location);
+                });
+            }
+            else{
+                console.log("nije ok");
+            }
+        }
+    }
 
     return (
       <>
@@ -290,11 +375,11 @@ const Map = ({marker}) => {
                   <h5>{`Pocinje: ${new Date(selectedMarker.starts_at).toLocaleDateString()}`}</h5>
                   <h5>{`Zavrsava se: ${new Date(selectedMarker.ends_at).toLocaleDateString()}`}</h5>
                   <h3>{`Nagrada: ${selectedMarker.reward_points}`}</h3>
-                  <Link href={`/api/acceptquest/${selectedMarker._id}`}><button>Zapocni kviz</button></Link>
+                  <button onClick={() => handleAcceptQuiz(selectedMarker)}>Zapocni kviz</button>
                   {/* Add other content as needed */}
                 </div>
               </InfoWindowF>
-            )}
+            )} 
             </GoogleMap>
             </div>
         )
