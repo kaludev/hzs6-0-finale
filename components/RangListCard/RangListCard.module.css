@@ -1,5 +1,5 @@
 .cardsMainSection{
-    margin: 100px auto 0 auto;
+    margin: 120px auto 20px auto;
     width: 70%;
     max-width: 968px;
 }
@@ -14,6 +14,7 @@
 .eventMain{
     display: flex;
     flex-direction: column;
+    width: 500px;
 }
 .eventName{
     font-size: 18px;
@@ -22,6 +23,12 @@
 .eventUsername{
     font-size: 14px;
     opacity: 0.7;
+}
+.points{
+    font-weight: 700;
+    color: var(--main-color);
+    width: 100px;
+    text-align: center;
 }
 .eventImg{
     width: 60px;
@@ -32,5 +39,9 @@
 @media only screen and (max-width: 700px) {
     .cardsMainSection{
         width: 100%;
+    }
+    .eventImg{
+        width: 40px;
+        height: 40px;
     }
 }

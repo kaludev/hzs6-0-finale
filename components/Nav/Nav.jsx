@@ -62,7 +62,7 @@ const Nav = ({setMenuVisible}) => {
               <Link className={styles.navLink} href="/partners">Partneri</Link>
           </li>
           <li>
-              <Link className={styles.navLink} href="/discover">Otkrij mesto</Link>
+              <Link className={styles.navLink} href="/discover">Otkrij lokaciju</Link>
           </li>
           <li>
               <Link className={styles.navLink} href="/gatherPoints">Sakupi bodove</Link>

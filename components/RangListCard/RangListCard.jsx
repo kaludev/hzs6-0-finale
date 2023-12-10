@@ -13,6 +13,7 @@ export default function RangListCard({card}){
                             <div className={styles.eventName}>{card?.name}</div>
                             <div className={styles.eventUsername}>@{card?.username}</div>
                         </div>
+                        <div className={styles.points}>{card?.points}</div>
                         <img src={card?.image} className={styles.eventImg} />
                     </div>
         
