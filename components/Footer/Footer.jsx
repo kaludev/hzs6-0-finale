@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styles from "./Footer.module.css";
 import Link from "next/link";
 import { FaInstagram, FaFacebookSquare, FaTwitter } from "react-icons/fa";
@@ -10,7 +9,7 @@ export default function Footer({dark}) {
             <hr className={styles.footerDevider} />
             <div className={styles.footerMain}>
                 <div className={styles.footerCol}>
-                    <Image width={100} height={150} className={styles.footerLogo} src="/images/logoFooter.png" alt="quizGoLogo" />
+                    <img className={styles.footerLogo} src="./images/logoFooter.png" alt="quizGoLogo" />
                 </div>
                 <div className={styles.footerCol}>
                     <h3>Stranice</h3>
