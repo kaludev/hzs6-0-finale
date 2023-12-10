@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styles from "./Footer.module.css";
 import Link from "next/link";
 import { FaInstagram, FaFacebookSquare, FaTwitter } from "react-icons/fa";
@@ -10,15 +9,15 @@ export default function Footer({dark}) {
             <hr className={styles.footerDevider} />
             <div className={styles.footerMain}>
                 <div className={styles.footerCol}>
-                    <Image width={100} height={150} className={styles.footerLogo} src="/images/logoFooter.png" alt="quizGoLogo" />
+                    <img className={styles.footerLogo} src="./images/logoFooter.png" alt="quizGoLogo" />
                 </div>
                 <div className={styles.footerCol}>
                     <h3>Stranice</h3>
                     <div className={styles.footerLink}><Link href="/">Početna</Link></div>
-                    <div className={styles.footerLink}><Link href="/about">Partneri</Link></div>
-                    <div className={styles.footerLink}><Link href="/arena">Pretraži lokaciju</Link></div>
-                    <div className={styles.footerLink}><Link href="/ranglist">Sakupi bodove</Link></div>
-                    <div className={styles.footerLink}><Link href="/activities">Rang lista</Link></div>
+                    <div className={styles.footerLink}><Link href="/partners">Partneri</Link></div>
+                    <div className={styles.footerLink}><Link href="/discover">Pretraži lokaciju</Link></div>
+                    <div className={styles.footerLink}><Link href="/gatherPoints">Sakupi bodove</Link></div>
+                    <div className={styles.footerLink}><Link href="/ranglist">Rang lista</Link></div>
                 </div>
                 <div className={styles.footerCol}>
                     <h3>Vaši podaci</h3>
