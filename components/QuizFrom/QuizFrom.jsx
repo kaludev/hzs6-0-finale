@@ -91,6 +91,7 @@ const QuizForm = ({id}) => {
             const json = await res.json();
             if(json.ok){
                 console.log("Bodovi uspesno updateovani");
+                window.location.href = "/";
             }
             else{
                 console.log(json.error);
