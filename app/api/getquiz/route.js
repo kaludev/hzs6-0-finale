@@ -8,7 +8,7 @@ export const GET = async (req) => {
     console.log(user);
     try{
             await connectToDB();
-            const requestedLandmark = Quiz.findById(user.user.active_quiz)
+            const requestedLandmark = await Quiz.findById(user.user.active_quiz)
             return new Response(JSON.stringify({ok:true,data:requestedLandmark}));
 
     }catch(e){

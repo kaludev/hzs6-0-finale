@@ -4,6 +4,9 @@ import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import styles from "./Discover.module.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const Discover = () => {
     const { data:session } = useSession();
@@ -30,8 +33,12 @@ const Discover = () => {
                 if(!data.ok){
                     throw new Error(await data.message);
                 }
-                console.log(data.data);
-                setMarker(data?.data.locations[0].latlng);
+                marker.lat = data?.data.locations[0].latLng.latitude;
+                marker.lng = data?.data.locations[0].latLng.longitude;
+
+                console.log(marker); // Ensure that the marker is updated here
+
+                await setMarker({...marker}); 
                 toast.success("Uspesno identifikovana lokacija",{
                     position: toast.POSITION.TOP_RIGHT
                 });
@@ -126,7 +133,7 @@ const Discover = () => {
                         <div onClick={handleSs} className={`${styles.primaryButton} primaryButton`}>Slikaj</div>
                     </div>
                     }
-                    {loaded && 
+                    {loaded && marker && 
                         <>
                             <Map  marker ={marker}/>
                         </>

@@ -21,23 +21,24 @@ const Map = ({marker}) => {
     //const [closestMarker, setClosestMarker] = useState(null);
     //const [directions, setDirections] = useState(null);
     //const [closestEvent, setClosestEvent] = useState(null);
+    useEffect(() => {
+      console.log(isLoaded);
+          if(navigator.geolocation){
+          navigator.geolocation.getCurrentPosition((pos) => {
+              console.log(pos);
+              setYourLocation({lat: pos.coords.latitude, lng: pos.coords.longitude});          
+          }, (err) => {
+              console.log(err);
+          });
+          }
+          fetch("/api/getQuizes").then(data => data.json()).then((json) => {
+              console.log(json);
+              setQuizes(json.data);
+          });
+  }, [isLoaded]);
     if(!marker){
 
-    useEffect(() => {
-        console.log(isLoaded);
-            if(navigator.geolocation){
-            navigator.geolocation.getCurrentPosition((pos) => {
-                console.log(pos);
-                setYourLocation({lat: pos.coords.latitude, lng: pos.coords.longitude});          
-            }, (err) => {
-                console.log(err);
-            });
-            }
-            fetch("/api/getQuizes").then(data => data.json()).then((json) => {
-                console.log(json);
-                setQuizes(json.data);
-            });
-    }, [isLoaded]);
+    
 
     function removeDuplicates(arr) {
         let unique = [];
@@ -308,7 +309,6 @@ const Map = ({marker}) => {
     const handleInfoWindowClose = () => {
         setSelectedMarker(null);
     };
-
     return (
       <>
       {
@@ -334,22 +334,20 @@ const Map = ({marker}) => {
                         }
                       </>
                     :
-                      <MarkerF key={1} position={marker} />
+                      <MarkerF key={1} onClick={() => handleMarkerClick(marker)} title='Hram svetog save' position={marker} />
                 }
                 {selectedMarker && (
               <InfoWindowF
-                position={selectedMarker.location}
+                position={selectedMarker?.location || selectedMarker}
                 onCloseClick={handleInfoWindowClose}
               >
                 {/* Content of your InfoWindow */}
                 <div className={styles.infoCont}>
                   {/* Customize the content of the InfoWindow here */}
-                  <h4>{selectedMarker.name}</h4>
-                  <h5>{`Broj zadataka: ${selectedMarker.task.length}`}</h5>
-                  <h5>{`Pocinje: ${new Date(selectedMarker.starts_at).toLocaleDateString()}`}</h5>
-                  <h5>{`Zavrsava se: ${new Date(selectedMarker.ends_at).toLocaleDateString()}`}</h5>
-                  <h3>{`Nagrada: ${selectedMarker.reward_points}`}</h3>
-                  <Link href={`/quiz/${selectedMarker._id}`}><div className={`${styles.primaryButton} primaryButton`}>Zapocni kviz</div></Link>
+                  <h4>{selectedMarker?.name}</h4>
+                  <h5>{`Broj zadataka: ${selectedMarker?.task?.length || 2}`}</h5>
+                  <h3>{`Nagrada: ${selectedMarker?.reward_points || 150}`}</h3>
+                  <Link href={`/quiz/${selectedMarker?._id || '657571d08c6b5cb6afeddfd2' }`}><div className={`${styles.primaryButton} primaryButton`}>Zapocni kviz</div></Link>
                   {/* Add other content as needed */}
                 </div>
               </InfoWindowF>
