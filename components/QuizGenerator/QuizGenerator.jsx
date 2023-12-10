@@ -10,11 +10,12 @@ const QuizGenerator = () => {
     const { data:session } = useSession();
     const webcamRef = useRef(null);
     const [file, setFile] = useState({
-        value: "",
+        value: {},
         error: false,
         errorMsg: ""
     });
     const handleSubmit = async () => {
+        console.log(file.value)
         if(file.value){
             try{
                 const formData = new FormData();
@@ -39,13 +40,26 @@ const QuizGenerator = () => {
             setFile(copy);
         }
     };
+    const dataURLtoBlob = (dataurl) => {
+        var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+        while(n--){
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new Blob([u8arr], {type:mime});
+    }
     const handleSs = () => {
         const copy = { ...file};
-        const imageSrc = await webcamRef.current.getScreenshot();
+        const imageSrc = webcamRef.current.getScreenshot();
         console.log(imageSrc);
-        copy.value = imageSrc;
+        copy.value = dataURLtoBlob(imageSrc);
+    
+        console.log(copy);
         setFile(copy);
+        console.log(copy);
+        console.log(file)
         handleSubmit();
+        console.log(file)
     }
     return (
 
