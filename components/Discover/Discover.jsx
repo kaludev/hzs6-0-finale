@@ -1,6 +1,8 @@
 "use client"
+import Map from "@components/Map/Map";
 import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
+import Webcam from "react-webcam";
 import styles from "./Discover.module.css";
 
 const Discover = () => {
