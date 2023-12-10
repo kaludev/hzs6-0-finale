@@ -4,6 +4,7 @@ import { FaAngleRight } from "react-icons/fa";
 import { FaAngleLeft } from "react-icons/fa";
 import "react-toastify/dist/ReactToastify.css";
 import {toast} from 'react-toastify';
+import { useSession } from 'next-auth/react';
 
 const QuizForm = ({id}) => {
         console.log(id);
@@ -11,6 +12,7 @@ const QuizForm = ({id}) => {
             question1: 0,
             question2: 0
         });
+        const {data: session} = useSession();
         const [poeni, setPoeni] = useState(null);
         useEffect(() => {
             const active_quiz = async () => {
@@ -52,7 +54,7 @@ const QuizForm = ({id}) => {
 
         const handleSubmit = async (e) =>{
             e.preventDefault();
-            if (!event.question1) {
+            /*if (!event.question1) {
                 Setquestion1Err('Morate izabrati odgovor');
                 setValid(false);
             }
@@ -66,15 +68,12 @@ const QuizForm = ({id}) => {
             }
             else{
                 Setquestion2Err('');
-            }
-    
-            if(!valid){
-                toast.error("Greska u validaciji");
-                return;
-            }
+            }*/
             let copy = JSON.parse(JSON.stringify(event))
             setEvent(copy);
-            let points = 0;
+
+            if([...document.getElementsByName("question1")].filter(x => x.checked).length == 1 && [...document.getElementsByName("question2")].filter(x => x.checked).length == 1){
+            let points = session?.user.points;
             console.log(document.getElementsByName("question1"));
             if((document.getElementById("true1").checked && !document.getElementById("true2").checked) || (!document.getElementById("true1").checked && document.getElementById("true2").checked)){
                 points += poeni / 4;
@@ -95,6 +94,10 @@ const QuizForm = ({id}) => {
             }
             else{
                 console.log(json.error);
+            }
+            }
+            else{
+
             }
         }
   return (
