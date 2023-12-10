@@ -1,5 +1,5 @@
 "use client"
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import "react-toastify/dist/ReactToastify.css";
 import {toast} from 'react-toastify';
@@ -64,28 +64,56 @@ const QuizGenerator = () => {
         handleSubmit(copy);
         console.log(file);
     }
+    function getWindowDimensions() {
+        const { innerWidth: width, innerHeight: height } = window;
+        return {
+          width,
+          height
+        };
+      }
+      
+      function useWindowDimensions() {
+        const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+      
+        useEffect(() => {
+          function handleResize() {
+            setWindowDimensions(getWindowDimensions());
+          }
+      
+          window.addEventListener('resize', handleResize);
+          return () => window.removeEventListener('resize', handleResize);
+        }, []);
+      
+        return windowDimensions;
+      }
+      
+      useEffect(() => {
+        getWindowDimensions();
+      },[])
+      
     return (
 
         session?.user ? (<div className={styles.main}>
-            <Webcam
-                className={styles.webcam}
-                audio={false}
-                height={window.height}
-                width={window.width}
-                screenshotFormat="image/jpeg"
-                ref={webcamRef}
-                videoConstraints={{
-                    facingMode: "environment",
-                    height:window.height,
-                    width:window.width
-                }}
-            />
             <QuizForm />
-            <input type="file" onChange={handleChange} />
-            <button type="button" onClick={handleSubmit}>Submit</button>
-            <button  onClick={handleSs}>
-                Capture photo
-            </button>
+            {innerWidth < 1024 ?
+                <>
+                    <Webcam
+                        className={styles.webcam}
+                        audio={false}
+                        height={window.height}
+                        width={window.width}
+                        screenshotFormat="image/jpeg"
+                        ref={webcamRef}
+                        videoConstraints={{
+                            facingMode: "environment",
+                            height:window.height,
+                            width:window.width
+                        }}
+                    />
+                    <button  onClick={handleSs}>
+                        Capture photo
+                    </button>
+                </> : ""}
             <p className={styles.errorMessage}>{file.errorMsg}</p>
         </div>) : 
         <div className={styles.main}>
