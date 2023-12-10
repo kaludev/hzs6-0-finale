@@ -31,7 +31,7 @@ const Discover = () => {
                     throw new Error(await data.message);
                 }
                 console.log(data.data);
-                setMarker(data.data);
+                setMarker(data?.data.locations[0].latlng);
                 toast.success("Uspesno identifikovana lokacija",{
                     position: toast.POSITION.TOP_RIGHT
                 });
@@ -40,6 +40,7 @@ const Discover = () => {
             }catch(e){
                 toast.error("Greska: " + e.message);
             }
+            setLoading(false);
         }else{
             const copy = { ...file };
             copy.error = true;
@@ -109,7 +110,7 @@ const Discover = () => {
                             <span className={styles.colored}>Ucitavanje</span><br />Sacekajte da AI identifikuje lokaciju
                         </div>
                     </div> : 
-                    <>
+                    !loaded && <>
                         <Webcam
                             className={styles.webcam}
                             audio={false}
