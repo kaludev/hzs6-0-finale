@@ -103,7 +103,7 @@ const Discover = () => {
         session?.user ? (<div className={styles.main}>
             {innerWidth < 1024 ?
                 <>
-                    loading ? 
+                    {loading ? 
                     <div className={styles.main}>
                         <div className={styles.notFound}>
                             <span className={styles.colored}>Ucitavanje</span><br />Sacekajte da AI identifikuje lokaciju
@@ -113,20 +113,21 @@ const Discover = () => {
                         <Webcam
                             className={styles.webcam}
                             audio={false}
-                            height={window.innerHeight}
-                            width={window.innerWidth}
+                            height={window.height}
+                            width={window.width}
                             screenshotFormat="image/jpeg"
                             ref={webcamRef}
                             videoConstraints={{
                                 facingMode: "environment",
-                                height:window.innerHeight,
-                                width:window.innerWidth
+                                height:window.height,
+                                width:window.width
                             }}
                         />
                         <button  onClick={handleSs}>
                             Capture photo
                         </button>
                     </>
+                    }
                     {loaded && 
                         <>
                             <Map  marker ={marker}/>
