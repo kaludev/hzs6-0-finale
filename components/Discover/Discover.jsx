@@ -109,7 +109,7 @@ const Discover = () => {
                             <span className={styles.colored}>Ucitavanje</span><br />Sacekajte da AI identifikuje lokaciju
                         </div>
                     </div> : 
-                    !loaded && <>
+                    !loaded && <div className={styles.webCont}>
                         <Webcam
                             className={styles.webcam}
                             audio={false}
@@ -124,7 +124,7 @@ const Discover = () => {
                             }}
                         />
                         <div onClick={handleSs} className={`${styles.primaryButton} primaryButton`}>Slikaj</div>
-                    </>
+                    </div>
                     }
                     {loaded && 
                         <>
