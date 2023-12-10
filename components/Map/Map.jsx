@@ -342,14 +342,14 @@ const Map = ({marker}) => {
                 onCloseClick={handleInfoWindowClose}
               >
                 {/* Content of your InfoWindow */}
-                <div>
+                <div className={styles.infoCont}>
                   {/* Customize the content of the InfoWindow here */}
                   <h4>{selectedMarker.name}</h4>
                   <h5>{`Broj zadataka: ${selectedMarker.task.length}`}</h5>
                   <h5>{`Pocinje: ${new Date(selectedMarker.starts_at).toLocaleDateString()}`}</h5>
                   <h5>{`Zavrsava se: ${new Date(selectedMarker.ends_at).toLocaleDateString()}`}</h5>
                   <h3>{`Nagrada: ${selectedMarker.reward_points}`}</h3>
-                  <Link href={`/quiz/${selectedMarker._id}`}><button>Zapocni kviz</button></Link>
+                  <Link href={`/quiz/${selectedMarker._id}`}><div className={`${styles.primaryButton} primaryButton`}>Zapocni kviz</div></Link>
                   {/* Add other content as needed */}
                 </div>
               </InfoWindowF>
