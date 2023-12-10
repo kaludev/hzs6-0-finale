@@ -28,7 +28,7 @@
 .profileCardMain{
     width: 90%;
     flex-direction: column;
-    margin: auto 10px;
+    margin: 20px 10px;
 }
 .profileCardMain h2{
     font-size: 30px;
