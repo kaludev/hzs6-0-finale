@@ -22,7 +22,7 @@ const PartnersPage = () => {
         <section className={styles.cardsMainSection}>
             <section className={styles.cardsSection}>
                 {
-                    partners.map(p => <SponsorCard key={partners.indexOf(p)} name={p.name} img={p.img} />)
+                    partners.map(p => {console.log(p) ; return  <SponsorCard key={partners.indexOf(p)} name={p.name} src={p.image} img={p.qr} />})
                 }
             </section>
         </section>
