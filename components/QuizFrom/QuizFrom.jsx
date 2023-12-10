@@ -11,6 +11,22 @@ const QuizForm = ({type,submitBody}) => {
             question1: 0,
             question2: 0
         });
+        useEffect(() => {
+            const handleSubmit = async () => {
+                try{
+                    const res = await fetch('/api/getquiz')
+                    const data = await res.json();
+                    if(!data.ok){
+                        throw new Error(data.message);
+                    }
+                    console.log(data.data);
+                    setEvent(data.data);
+                }catch(e){
+                    toast.error("Greska: " + e.message);
+                }
+            }  
+            handleSubmit();
+        }, [])
         const [question1Err, Setquestion1Err] = useState('');
         const [question2Err, Setquestion2Err] = useState('');
         const [valid, setValid] = useState("");

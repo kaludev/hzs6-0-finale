@@ -6,8 +6,10 @@ import {toast} from 'react-toastify';
 import styles from './quizGenerator.module.css';
 import Webcam from "react-webcam";
 import QuizForm from 'components/QuizFrom/QuizFrom';
+import { useParams } from 'next/navigation';
 
 const QuizGenerator = () => {
+    const {id} = useParams()
     const { data:session } = useSession();
     const webcamRef = useRef(null);
     const [file, setFile] = useState({
