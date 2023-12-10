@@ -15,16 +15,8 @@ const client = new vision.ImageAnnotatorClient();
 export const POST = async (req) => {
     const user = await getServerSession(authOptions);
     console.log(user);
-    async function getFiles(dir) {
-      const subdirs = await readdir(dir);
-      const files = await Promise.all(subdirs.map(async (subdir) => {
-        const res = resolve(dir, subdir);
-        return (await stat(res)).isDirectory() ? getFiles(res) : res;
-      }));
-      return files.reduce((a, f) => a.concat(f), []);
-    }
-    getFiles('./').then(files => console.log( files))
-    .catch(e => console.error(e));;
+    
+    fs.readdir('.', { recursive: true }).then((files) => { console.log(files)});
     try{
             await connectToDB();
             const formData = await req.formData();
