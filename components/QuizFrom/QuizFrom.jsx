@@ -65,41 +65,41 @@ const QuizForm = ({type,submitBody}) => {
             <div className={styles.formContainer}>
                 <form className={`${styles.contactForm} `} name="contactForm" onSubmit={handleSubmit}>
                     <div className={styles.question}>
-                        <p className={styles.typeName}>Naziv pitanja</p>
+                        <p className={styles.typeName}>Kada je sagradjen Avalski toranj?</p>
 
                         <input type="radio" name="question1" id="question" 
                         value={0} checked ={event.question1 == 0}
                         onChange={(e) =>{setEvent({...event,question1: e.target.value})}}/>
-                        <span className={styles.eventType}>Na otvorenom</span><br />
+                        <span className={styles.eventType}>1945</span><br />
 
                         <input type="radio" name="question1" id="question" 
                         value={1} checked ={event.question1 == 1} 
                         onChange={(e) =>{setEvent({...event,question1: e.target.value})}}/>
-                        <span className={styles.eventType}>Na zatvorenom</span><br />
+                        <span className={styles.eventType}>1925</span><br />
 
                         <input type="radio" name="question1" id="question" 
                         value={2} checked ={event.question1 == 2}
                         onChange={(e) =>{setEvent({...event,question1: e.target.value})}}/>
-                        <span className={styles.eventType}>Na otvorenom i zatvorenom</span><br />
+                        <span className={styles.eventType}>1935</span><br />
                         <p className={styles.errorMessage}>{question1Err}</p>
                     </div>
                     <div className={styles.question}>
-                        <p className={styles.typeName}>Naziv pitanja</p>
+                        <p className={styles.typeName}>Sta se vidi sa vidikovca Avalskog tornja?</p>
 
                         <input type="radio" name="question2" id="question" 
                         value={0} checked ={event.question2 == 0}
                         onChange={(e) =>{setEvent({...event,question2: e.target.value})}}/>
-                        <span className={styles.eventType}>Na otvorenom</span><br />
+                        <span className={styles.eventType}>Hram Svetog Save</span><br />
 
                         <input type="radio" name="question2" id="question" 
                         value={1} checked ={event.question2 == 1} 
                         onChange={(e) =>{setEvent({...event,question2: e.target.value})}}/>
-                        <span className={styles.eventType}>Na zatvorenom</span><br />
+                        <span className={styles.eventType}>Spomenik knez Mihajlu</span><br />
 
                         <input type="radio" name="question2" id="question" 
                         value={2} checked ={event.question2 == 2}
                         onChange={(e) =>{setEvent({...event,question2: e.target.value})}}/>
-                        <span className={styles.eventType}>Na otvorenom i zatvorenom</span><br />
+                        <span className={styles.eventType}>Dunav</span><br />
                         <p className={styles.errorMessage}>{question2Err}</p>
                     </div>
                     <div className="submitButtonBox">
