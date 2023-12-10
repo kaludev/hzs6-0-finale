@@ -10,6 +10,7 @@ export const POST = async (req) => {
         console.log(session?.user);
         await connectToDB();
         const points = await req.json();
+        console.log(points);
         const updatedUser = await User.findOneAndUpdate({email: session?.user.email}, {points: points.points}, {new: true});
         return NextResponse.json({ok: true, data: updatedUser}, { status: 200});
     }

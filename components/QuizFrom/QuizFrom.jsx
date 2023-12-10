@@ -11,8 +11,27 @@ const QuizForm = ({id}) => {
             question1: 0,
             question2: 0
         });
+        const [poeni, setPoeni] = useState(null);
         useEffect(() => {
-            /*const handleSubmit = async () => {
+            const active_quiz = async () => {
+              const res_a = await fetch("/api/acceptQuiz", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({id})
+            });
+            const json_a = await res_a.json();
+            console.log("json_a", json_a);
+            if(json_a.ok){
+                console.log("Uspesno dodat active quiz");
+            }
+            
+            }
+            active_quiz();
+          }, []);
+        useEffect(() => {
+            const handleSubmit = async () => {
                 try{
                     const res = await fetch('/api/getquiz')
                     const data = await res.json();
@@ -20,18 +39,19 @@ const QuizForm = ({id}) => {
                         throw new Error(data.message);
                     }
                     console.log(data.data);
-                    setEvent(data.data);
+                    setPoeni(data.data.reward_points);
                 }catch(e){
                     toast.error("Greska: " + e.message);
                 }
             }  
-            handleSubmit();*/
+            handleSubmit();
         }, [])
         const [question1Err, Setquestion1Err] = useState('');
         const [question2Err, Setquestion2Err] = useState('');
-        const [valid, setValid] = useState("");
+        const [valid, setValid] = useState(true);
 
-        const handleSubmit = () =>{
+        const handleSubmit = async (e) =>{
+            e.preventDefault();
             if (!event.question1) {
                 Setquestion1Err('Morate izabrati odgovor');
                 setValid(false);
@@ -51,12 +71,31 @@ const QuizForm = ({id}) => {
             if(!valid){
                 toast.error("Greska u validaciji");
                 return;
-            } 
-            const body = {
-                eventType: event.eventType.value
             }
             let copy = JSON.parse(JSON.stringify(event))
-            setEvent(copy)
+            setEvent(copy);
+            let points = 0;
+            console.log(document.getElementsByName("question1"));
+            if((document.getElementById("true1").checked && !document.getElementById("true2").checked) || (!document.getElementById("true1").checked && document.getElementById("true2").checked)){
+                points += poeni / 4;
+            }
+            else if(document.getElementById("true1").checked && document.getElementById("true2").checked){
+                points += poeni / 2;
+            }
+            const res = await fetch("/api/updatePoints", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({points})
+            });
+            const json = await res.json();
+            if(json.ok){
+                console.log("Bodovi uspesno updateovani");
+            }
+            else{
+                console.log(json.error);
+            }
         }
   return (
     <>
@@ -74,7 +113,7 @@ const QuizForm = ({id}) => {
                         onChange={(e) =>{setEvent({...event,question1: e.target.value})}}/>
                         <span className={styles.eventType}>17</span><br />
 
-                        <input type="radio" name="question1" id="question" 
+                        <input type="radio" name="question1" id="true1" 
                         value={1} checked ={event.question1 == 1} 
                         onChange={(e) =>{setEvent({...event,question1: e.target.value})}}/>
                         <span className={styles.eventType}>18</span><br />
@@ -98,7 +137,7 @@ const QuizForm = ({id}) => {
                         onChange={(e) =>{setEvent({...event,question2: e.target.value})}}/>
                         <span className={styles.eventType}>1940</span><br />
 
-                        <input type="radio" name="question2" id="question" 
+                        <input type="radio" name="question2" id="true2" 
                         value={2} checked ={event.question2 == 2}
                         onChange={(e) =>{setEvent({...event,question2: e.target.value})}}/>
                         <span className={styles.eventType}>1935</span><br />
@@ -122,10 +161,10 @@ const QuizForm = ({id}) => {
                     <div className={styles.question}>
                         <p className={styles.typeName}>Kada je sagradjen Avalski toranj?</p>
 
-                        <input type="radio" name="question1" id="question" 
+                        <input type="radio" name="question1" id="true1" 
                         value={0} checked ={event.question1 == 0}
                         onChange={(e) =>{setEvent({...event,question1: e.target.value})}}/>
-                        <span className={styles.eventType}>1945</span><br />
+                        <span className={styles.eventType}>1965</span><br />
 
                         <input type="radio" name="question1" id="question" 
                         value={1} checked ={event.question1 == 1} 
@@ -151,7 +190,7 @@ const QuizForm = ({id}) => {
                         onChange={(e) =>{setEvent({...event,question2: e.target.value})}}/>
                         <span className={styles.eventType}>Spomenik knez Mihajlu</span><br />
 
-                        <input type="radio" name="question2" id="question" 
+                        <input type="radio" name="question2" id="true2" 
                         value={2} checked ={event.question2 == 2}
                         onChange={(e) =>{setEvent({...event,question2: e.target.value})}}/>
                         <span className={styles.eventType}>Dunav</span><br />
@@ -184,7 +223,7 @@ const QuizForm = ({id}) => {
                         onChange={(e) =>{setEvent({...event,question1: e.target.value})}}/>
                         <span className={styles.eventType}>Rusija</span><br />
 
-                        <input type="radio" name="question1" id="question" 
+                        <input type="radio" name="question1" id="true1" 
                         value={2} checked ={event.question1 == 2}
                         onChange={(e) =>{setEvent({...event,question1: e.target.value})}}/>
                         <span className={styles.eventType}>Francuska</span><br />
@@ -198,7 +237,7 @@ const QuizForm = ({id}) => {
                         onChange={(e) =>{setEvent({...event,question2: e.target.value})}}/>
                         <span className={styles.eventType}>Dunav</span><br />
 
-                        <input type="radio" name="question2" id="question" 
+                        <input type="radio" name="question2" id="true2" 
                         value={1} checked ={event.question2 == 1} 
                         onChange={(e) =>{setEvent({...event,question2: e.target.value})}}/>
                         <span className={styles.eventType}>Sava</span><br />

@@ -13,6 +13,7 @@ const Discover = () => {
     const [loading, setLoading] = useState(false);
     const [loaded, setLoaded] = useState(false);
     const webcamRef = useRef(null);
+    const [poeni, setPoeni] = useState(null);
     const [file, setFile] = useState({
         value: {},
         error: false,
@@ -39,6 +40,31 @@ const Discover = () => {
                 console.log(marker); // Ensure that the marker is updated here
 
                 await setMarker({...marker}); 
+
+                const res2 = await fetch('/api/getquiz')
+                const data2 = await res.json();
+                    if(!data.ok){
+                        throw new Error(data.message);
+                    }
+
+                setPoeni(data2.data.reward_points);
+                const points = poeni / 2;
+
+                const res3 = await fetch("/api/updatePoints", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({points})
+                });
+                const json3 = await res.json();
+                if(json3.ok){
+                    console.log("Bodovi uspesno updateovani");
+                }
+                else{
+                    console.log(json3.error);
+                }
+            
                 toast.success("Uspesno identifikovana lokacija",{
                     position: toast.POSITION.TOP_RIGHT
                 });

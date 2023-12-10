@@ -81,7 +81,7 @@ const SideNav = ({menuVisible,setMenuVisible}) => {
                             <Link className={styles.sideNavLink} href="/partners">Partneri</Link>
                         </li>
                         <li>
-                            <Link className={styles.sideNavLink} href="/discover">Otkrij lokaciju</Link>
+                            <Link className={styles.sideNavLink} href="/discover">Pretraži lokaciju</Link>
                         </li>
                         <li>
                             <Link className={styles.sideNavLink} href="/gatherPoints">Sakupi bodove</Link>

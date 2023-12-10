@@ -12,7 +12,7 @@ export default function AboutSection(){
                         <div className={`${styles.primaryButton} primaryButton`}><Link href="/gatherPoints">Sakupi bodove</Link></div>
                     </div>
                 </div>
-                <img className={styles.aboutImg} src="./images/hero2.jpg" alt="" />
+                <img className={styles.aboutImg} src="./images/hero5.jpg" alt="" />
             </div>
             <div className={styles.aboutSec}>
                 <div className={styles.aboutDesc}>
@@ -22,7 +22,7 @@ export default function AboutSection(){
                         <Link href="/discover"><div className={`${styles.primaryButton} primaryButton`}>Pronadji sada</div></Link>
                     </div>
                 </div>
-                <img className={styles.aboutImg} src="./images/hero3.jpg" alt="" />
+                <img className={styles.aboutImg} src="./images/hero6.jpg" alt="" />
             </div>
         </section>
     )

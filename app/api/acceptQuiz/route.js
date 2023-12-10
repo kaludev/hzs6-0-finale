@@ -7,7 +7,8 @@ export const POST = async (req) => {
     const session = await getServerSession(authOptions);
     try{    
         const quiz = await req.json();
-        const user = await User.findOneAndUpdate({_id: session?.user._id}, {active_quiz: quiz}, {new: true});
+        console.log(session.user._id);
+        const user = await User.findOneAndUpdate({_id: session?.user._id}, {active_quiz: quiz.id}, {new: true});
         console.log(user);
         return NextResponse.json({ok: true, data: user}, {status: 200});
     }
