@@ -4,161 +4,164 @@ import { useSession } from 'next-auth/react';
 import {useState, useEffect} from 'react';
 import { GoogleMap, MarkerF, DirectionsService, DirectionsRenderer, useJsApiLoader } from '@react-google-maps/api';
 
-const Map = () => {
+const Map = ({marker}) => {
     const [yourLocation, setYourLocation] = useState({});
-    //const [closestMarker, setClosestMarker] = useState(null);
-    //const [directions, setDirections] = useState(null);
-    //const [closestEvent, setClosestEvent] = useState(null);
+    const {data: session} = useSession();
     const [quizes, setQuizes] = useState([]);
-    const [location, setLocation] = useState([]);
-
+      const [location, setLocation] = useState([]);
     const { isLoaded } = useJsApiLoader({
       googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
     })
+    //const [closestMarker, setClosestMarker] = useState(null);
+    //const [directions, setDirections] = useState(null);
+    //const [closestEvent, setClosestEvent] = useState(null);
+    if(!marker){
+      
+      
 
-    useEffect(() => {
+      useEffect(() => {
 
-    }, [isLoaded])
+      }, [isLoaded])
 
-    const {data: session} = useSession();
+      const {data: session} = useSession();
 
-    useEffect(() => {
-        if(navigator.geolocation){
-          navigator.geolocation.getCurrentPosition((pos) => {
-            console.log(pos);
-            setYourLocation({lat: pos.coords.latitude, lng: pos.coords.longitude});          
-          }, (err) => {
-            console.log(err);
-          });
-        }
-        const getQuizes = async () => {
-            const res = await fetch("/api/getQuizes");
-            const json = await res.json();
-            console.log(json);
-            setQuizes(json.data);   
-        }
-        getQuizes();
-        
-        
-    }, []);
-
-    const updateLocation = (data) => {
-        setLocation((prev) => [...prev, data]);
-    }
-
-    useEffect(() => {
-        console.log("aosasop");
-        console.log(quizes);
-            quizes.map(async (x) => {
-                    const resg = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-                        x.place
-                    )}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`);
-
-                    const jsong = await resg.json();
-                    console.log("jsong", jsong);
-                    updateLocation(jsong.results[0].geometry.location);
+      useEffect(() => {
+          if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition((pos) => {
+              console.log(pos);
+              setYourLocation({lat: pos.coords.latitude, lng: pos.coords.longitude});          
+            }, (err) => {
+              console.log(err);
             });
-        
-    }, [quizes]);
-
-    /*if(mode == "user"){
-      useEffect(() => {
-          if(session?.user){
-            findClosestMarker(yourLocation, mode);
           }
-                 
-      }, [session, isLoaded]);
-    }
-    else if(mode == "all"){
-      useEffect(() => {
-        findClosestMarker(yourLocation, mode);
-      }, [events]);
-      useEffect(() => {
-        async function getEvents(){
-          const res = await fetch("/api/event/getEvents");
-          const json = await res.json();
-          return json;
+          const getQuizes = async () => {
+              const res = await fetch("/api/getQuizes");
+              const json = await res.json();
+              console.log(json);
+              setQuizes(json.data);   
+          }
+          getQuizes();
+          
+          
+        }, []);
+
+        const updateLocation = (data) => {
+            setLocation((prev) => [...prev, data]);
         }
-        getEvents().then((data) => {
-          setEvents(data);
-          findClosestMarker(yourLocation, mode);
-        });
-      }, [isLoaded]);
-    }*/
-    
-    /*useEffect(() => {
 
-    },[events]);*/
-    
+        useEffect(() => {
+            console.log("aosasop");
+            console.log(quizes);
+                quizes.map(async (x) => {
+                        const resg = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+                            x.place
+                        )}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`);
 
-    const containerStyle = {
-      width: '100%',
-      height: '100%',
-    };
+                        const jsong = await resg.json();
+                        console.log("jsong", jsong);
+                        updateLocation(jsong.results[0].geometry.location);
+                });
+            
+        }, [quizes]);
 
-    /*const findClosestMarker = (userLocation, mode) => {
-        let closestDistance = Number.MAX_VALUE;
-        let closestMarker = null;
-        let closestEvent = null;
-        let bool;
-        if(mode == "user"){
-          session?.user.events.forEach((e) => {
-            if(new Date(e.starts_at) > Date.now()){
-              bool = true;
-              const eventLocation = e.location;
-            const distance = calculateDistance(userLocation, eventLocation);
-    
-            if (distance < closestDistance) {
-              closestDistance = distance;
-              closestMarker = eventLocation;
-              closestEvent = e;
+      /*if(mode == "user"){
+        useEffect(() => {
+            if(session?.user){
+              findClosestMarker(yourLocation, mode);
             }
+                  
+        }, [session, isLoaded]);
+      }
+      else if(mode == "all"){
+        useEffect(() => {
+          findClosestMarker(yourLocation, mode);
+        }, [events]);
+        useEffect(() => {
+          async function getEvents(){
+            const res = await fetch("/api/event/getEvents");
+            const json = await res.json();
+            return json;
           }
-          else{
-            bool = false;
-          }
+          getEvents().then((data) => {
+            setEvents(data);
+            findClosestMarker(yourLocation, mode);
           });
-        }
-        else if(mode == "all"){
-          events.forEach((e) => {
+        }, [isLoaded]);
+      }*/
+      
+      /*useEffect(() => {
+
+      },[events]);*/
+      
+      }
+      const containerStyle = {
+        width: '100%',
+        height: '100%',
+      };
+
+      /*const findClosestMarker = (userLocation, mode) => {
+          let closestDistance = Number.MAX_VALUE;
+          let closestMarker = null;
+          let closestEvent = null;
+          let bool;
+          if(mode == "user"){
+            session?.user.events.forEach((e) => {
               if(new Date(e.starts_at) > Date.now()){
                 bool = true;
                 const eventLocation = e.location;
-                const distance = calculateDistance(userLocation, eventLocation);
-        
-                if (distance < closestDistance) {
-                  closestDistance = distance;
-                  closestMarker = eventLocation;
-                  closestEvent = e;
+              const distance = calculateDistance(userLocation, eventLocation);
+      
+              if (distance < closestDistance) {
+                closestDistance = distance;
+                closestMarker = eventLocation;
+                closestEvent = e;
+              }
+            }
+            else{
+              bool = false;
+            }
+            });
+          }
+          else if(mode == "all"){
+            events.forEach((e) => {
+                if(new Date(e.starts_at) > Date.now()){
+                  bool = true;
+                  const eventLocation = e.location;
+                  const distance = calculateDistance(userLocation, eventLocation);
+          
+                  if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestMarker = eventLocation;
+                    closestEvent = e;
+                  }
                 }
-              }
-              else{
-                bool = false;
-              }
-          });
-        }
-        setClosestMarker(closestMarker);
-        setClosestEvent(closestEvent);
-    };*/
+                else{
+                  bool = false;
+                }
+            });
+          }
+          setClosestMarker(closestMarker);
+          setClosestEvent(closestEvent);
+      };*/
   
-    const calculateDistance = (pos1, pos2) => {
-      const R = 6371; // Earth radius in kilometers
-      const dLat = deg2rad(pos2.lat - pos1.lat);
-      const dLng = deg2rad(pos2.lng - pos1.lng);
-      const a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(deg2rad(pos1.lat)) *
-          Math.cos(deg2rad(pos2.lat)) *
-          Math.sin(dLng / 2) *
-          Math.sin(dLng / 2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      const distance = R * c;
-      return distance;
-    };
-  
-    const deg2rad = (deg) => {
-      return deg * (Math.PI / 180);
-    };
+      const calculateDistance = (pos1, pos2) => {
+        const R = 6371; // Earth radius in kilometers
+        const dLat = deg2rad(pos2.lat - pos1.lat);
+        const dLng = deg2rad(pos2.lng - pos1.lng);
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(deg2rad(pos1.lat)) *
+            Math.cos(deg2rad(pos2.lat)) *
+            Math.sin(dLng / 2) *
+            Math.sin(dLng / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c;
+        return distance;
+      };
+    
+      const deg2rad = (deg) => {
+        return deg * (Math.PI / 180);
+      };
 
     /*useEffect(() => {
 
@@ -211,9 +214,10 @@ const Map = () => {
                     )
                 }
                 {
-                    location.map(loc => 
+                    !marker ? location.map(loc => 
                         <MarkerF key={quizes.indexOf(location)} position={loc} />
-                    )
+                    ) :
+                    <MarkerF key={1} position={marker} />
                 }
             </GoogleMap>
             </div>
