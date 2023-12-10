@@ -106,7 +106,7 @@ const QuizGenerator = ({id}) => {
     return (
 
         session?.user ? (<div className={styles.main}>
-            <QuizForm />
+            <QuizForm id={id} />
             {innerWidth < 1024 ?
                 <>
                     <Webcam
