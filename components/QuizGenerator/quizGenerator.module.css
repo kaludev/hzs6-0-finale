@@ -23,3 +23,13 @@
 .button{
     z-index: 2;
 }
+.primaryButton{
+    max-width: 150px;
+    text-align: center;
+    padding: 5px 25px;
+    color: #fff;
+    margin: 5px;
+}
+.primaryButton:hover{
+    color: var(--main-color);
+}

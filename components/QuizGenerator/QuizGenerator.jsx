@@ -37,14 +37,11 @@ const QuizGenerator = ({id}) => {
                 if(json_a.ok){
                     console.log("Uspesno dodat active quiz");
                 }
-                if(!res.ok){
-                    throw new Error(await res.json());
-                }
                 toast.success("Uspesno dodat quiz",{
                     position: toast.POSITION.TOP_RIGHT
                 });
             }catch(e){
-                toast.error("Greska: " + e.message);
+                //toast.error("Greska: " + e.message);
             }
         }else{
             const copy = { ...file };
@@ -122,7 +119,7 @@ const QuizGenerator = ({id}) => {
                             width:window.width
                         }}
                     />
-                    <button  onClick={handleSs}>
+                    <button className={`${styles.primaryButton} primaryButton`} onClick={handleSs}>
                         Capture photo
                     </button>
                 </> : ""}

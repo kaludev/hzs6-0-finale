@@ -2,11 +2,6 @@ import { put } from '@vercel/blob';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]/route';
 import { connectToDB } from '@utils/database';
-const { promisify } = require('util');
-const { resolve } = require('path');
-const fs = require('fs');
-const readdir = promisify(fs.readdir);
-const stat = promisify(fs.stat);
 
 const vision = require('@google-cloud/vision');
 
@@ -16,7 +11,6 @@ export const POST = async (req) => {
     const user = await getServerSession(authOptions);
     console.log(user);
     
-    fs.readdir('.', { recursive: true }).then((files) => { console.log(files)});
     try{
             await connectToDB();
             const formData = await req.formData();
