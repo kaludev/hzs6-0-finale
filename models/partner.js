@@ -14,15 +14,6 @@ const partnerSchema = new Schema({
         required: true
     },
     offers: {
-        /*
-            [
-                {
-                    description:
-                    cost:
-                },
-                ...
-            ] 
-        */
         type: [Object] 
     },
     img: {
