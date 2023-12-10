@@ -40,9 +40,9 @@ export default function Footer({dark}) {
             <hr className={styles.footerDevider} />
             <hr className={styles.footerDevider} />
             <div className={styles.footerCopyright}>
-                <p className={styles.footerCopyrightP}>© {new Date().getFullYear()}. Sva prava zadržana Tim "Class" Kraljevo.</p>
+                <p className={styles.footerCopyrightP}>© {new Date().getFullYear()}. Sva prava zadržana. quizyGo</p>
                 <div className={styles.footerPowered}>
-                    <p>Veb aplikacija izrađena za potrebe HZS 6.0 </p>
+                    <p>Kreirali djaci u finalu HZS 6.0</p>
                 </div>
             </div>
         </footer>

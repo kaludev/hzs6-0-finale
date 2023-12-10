@@ -102,8 +102,7 @@ const Discover = () => {
     return (
 
         session?.user ? (<div className={styles.main}>
-            {innerWidth < 1024 ?
-                <>
+            
                     {loading ? 
                     <div className={styles.main}>
                         <div className={styles.notFound}>
@@ -132,12 +131,11 @@ const Discover = () => {
                             <Map  marker ={marker}/>
                         </>
                     }
-                </> : 
-                <div className={styles.main}>
-                    <div className={styles.notFound}>
-                        <span className={styles.colored}>Morate biti na telefonu</span><br />Da biste identifikovali mesto morate biti na telefonu
-                    </div>
-                </div>}
+                 {/* <div className={styles.main}>
+                     <div className={styles.notFound}>
+                         <span className={styles.colored}>Morate biti na telefonu</span><br />Da biste identifikovali mesto morate biti na telefonu
+                     </div>
+                 </div> */}
             <p className={styles.errorMessage}>{file.errorMsg}</p>
         </div>) : 
         <div className={styles.main}>
