@@ -63,16 +63,9 @@ const Nav = ({setMenuVisible}) => {
               <Link className={styles.navLink} href="/ranglist">Rang Lista</Link>
           </li>
           <li>
-              <Link className={styles.navLink} href="/activities">Moj nalog</Link>
-          </li>
-          <li>
           {session?.user ? (
             <div className={styles.navProfile}>
-              {session?.user.isOrganizer && <Link href="/create-event" className={`${styles.secondaryButton} secondaryButton`}>
-                {" "}
-                Dodaj takmičenje
-              </Link>}
-              <button type="button" onClick={async () =>{await signOut(); window.location.href ='/'}} className={`${styles.secondaryButton} secondaryButton`}>
+              <button type="button" onClick={async () =>{await signOut(); window.location.href ='/'}} className={`${styles.primaryButton} primaryButton`}>
                 {" "}
                 Odjavi se
               </button>
