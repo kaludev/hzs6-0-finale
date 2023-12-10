@@ -32,7 +32,7 @@ export default function PreferencesSection() {
                 throw new Error(data.message);
             }
 
-            toast.success('Uspesno poslan zahtev');
+            toast.success('Uspesno izabrane preference');
             router.push('/')
         }catch(e){
             toast.error(e.message)
